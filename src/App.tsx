@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import Cursor from './components/Cursor';
 import Loader from './components/Loader';
 import InteractiveFunnel from './components/InteractiveFunnel';
+import WhatsappButton from './components/WhatsappButton';
 import './styles/App.css';
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <div className="divider" />
           <Portfolio />
           <Footer />
+          <WhatsappButton />
         </main>
       )}
     </>

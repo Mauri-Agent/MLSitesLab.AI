@@ -1,0 +1,94 @@
+.whatsapp-float-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  background-color: #25D366; /* Verde oficial WhatsApp */
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 18px rgba(37, 211, 102, 0.4);
+  z-index: 999;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Efecto de pulso luminoso alrededor del botón */
+.whatsapp-pulse {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #25D366;
+  border-radius: 50%;
+  z-index: -1;
+  opacity: 0.4;
+  animation: pulse-ring 2.2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+.whatsapp-icon {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s var(--ease);
+}
+
+.whatsapp-float-btn:hover .whatsapp-icon {
+  transform: rotate(12deg) scale(1.05);
+}
+
+/* Tooltip elegante que aparece en hover */
+.whatsapp-tooltip {
+  position: absolute;
+  right: 70px;
+  background: #0f1812;
+  color: #e2f5d0;
+  border: 1px solid rgba(15, 203, 84, 0.3);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.whatsapp-float-btn:hover .whatsapp-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* Animación del anillo de pulso */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+/* Responsivo para móviles */
+@media (max-width: 768px) {
+  .whatsapp-float-btn {
+    bottom: 16px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+  }
+  
+  .whatsapp-tooltip {
+    display: none; /* Ocultar tooltip en pantallas móviles */
+  }
+}
