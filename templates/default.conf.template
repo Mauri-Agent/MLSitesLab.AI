@@ -1,0 +1,49 @@
+server {
+    listen 80;
+    root /usr/share/nginx/html;
+    index index.html;
+
+    # Ruta de proxy seguro para la API de OpenAI
+    location /api/chat {
+        resolver 8.8.8.8 valid=30s;
+        
+        # Permitir métodos CORS básicos si fuese necesario, pero al ser misma IP no hay problema
+        proxy_http_version 1.1;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host api.openai.com;
+        proxy_ssl_server_name on;
+        proxy_ssl_name api.openai.com;
+        
+        # Inyectar el header de autorización de OpenAI usando la variable de entorno
+        proxy_set_header Authorization "Bearer ${VITE_OPENAI_API_KEY}";
+        proxy_set_header Content-Type "application/json";
+        
+        # Reescribir y enviar a OpenAI
+        proxy_pass https://api.openai.com/v1/chat/completions;
+        
+        # Quitar headers que puedan revelar la estructura interna
+        proxy_hide_header Access-Control-Allow-Origin;
+    }
+
+    # Para SPA React: redirigir todas las rutas al index.html
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Caché agresivo para assets estáticos (JS, CSS, imágenes)
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # Headers de seguridad
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header Referrer-Policy "strict-origin-when-cross-origin";
+
+    # Gzip
+    gzip on;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+}

@@ -19,11 +19,11 @@ RUN npm run build
 # Etapa 2: Servidor Nginx (imagen mínima)
 FROM nginx:alpine
 
-# Copiar los archivos compilados
+# Copiar los archivos compilados del frontend
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copiar configuración de Nginx para SPA
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copiar configuración de plantilla de Nginx para inyección dinámica y proxy
+COPY templates/default.conf.template /etc/nginx/templates/default.conf.template
 
 # Puerto 80
 EXPOSE 80
