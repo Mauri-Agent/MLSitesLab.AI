@@ -6,14 +6,8 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --frozen-lockfile
 
-# Pasar variable de entorno de EasyPanel al build de Vite
-ARG VITE_OPENAI_API_KEY
-ENV VITE_OPENAI_API_KEY=$VITE_OPENAI_API_KEY
-
-# Copiar el código fuente
+# Copiar el código fuente y compilar
 COPY . .
-
-# Build de producción
 RUN npm run build
 
 # Etapa 2: Servidor Nginx (imagen mínima)
@@ -22,11 +16,17 @@ FROM nginx:alpine
 # Copiar los archivos compilados del frontend
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copiar configuración de plantilla de Nginx para inyección dinámica y proxy
-COPY templates/default.conf.template /etc/nginx/templates/default.conf.template
+# Copiar configuración estática de Nginx
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copiar script de entrypoint para inyección en tiempo de ejecución
+COPY entrypoint.sh /entrypoint.sh
 
 # Puerto 80
 EXPOSE 80
+
+# Usar el script de entrypoint para inicializar la clave API
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Iniciar Nginx
 CMD ["nginx", "-g", "daemon off;"]
