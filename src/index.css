@@ -1,0 +1,206 @@
+/* ============================================================
+   DESIGN SYSTEM — MLSitesLab.AI  "Green Arrow" Dark Theme
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+/* ── Variables ─────────────────────────────────────────────── */
+:root {
+  /* Core Colors */
+  --bg-dark:          #050908;
+  --bg-section:       #080e0a;
+  --bg-card:          #0c1510;
+  --bg-card-hover:    #111e15;
+  --bg-glass:         rgba(12, 21, 16, 0.6);
+
+  /* Text */
+  --text-primary:     #eef3ee;
+  --text-secondary:   #7a9982;
+  --text-muted:       #4d6655;
+
+  /* Accent Greens */
+  --accent-bright:    #0fcb54;   /* lime neon */
+  --accent-mid:       #0a8f3a;   /* mid green */
+  --accent-deep:      #064d21;   /* dark green */
+  --accent-glow:      rgba(15, 203, 84, 0.12);
+  --accent-glow-lg:   rgba(15, 203, 84, 0.06);
+
+  /* Borders */
+  --border:           rgba(15, 203, 84, 0.1);
+  --border-hover:     rgba(15, 203, 84, 0.35);
+
+  /* Typography */
+  --font-body:        'Inter', system-ui, sans-serif;
+  --font-display:     'Space Grotesk', system-ui, sans-serif;
+
+  /* Spacing */
+  --nav-h:            72px;
+  --section-py:       7rem;
+  --container-px:     2rem;
+  --container-max:    1180px;
+
+  /* Radius */
+  --radius-sm:        8px;
+  --radius-md:        14px;
+  --radius-lg:        20px;
+  --radius-xl:        28px;
+  --radius-full:      9999px;
+
+  /* Transitions */
+  --ease:             cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring:      cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Reset ─────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-y: auto; /* garantiza scroll vertical habilitado */
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  line-height: 1.65;
+  overflow-x: clip;
+  overflow-y: auto; /* scroll vertical siempre habilitado */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul { list-style: none; }
+img, svg { display: block; max-width: 100%; }
+button { font-family: inherit; cursor: pointer; }
+
+/* ── Grid noise overlay ────────────────────────────────────── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(15,203,84,.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15,203,84,.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Layout utilities ──────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: calc(var(--container-max) + var(--container-px) * 2);
+  padding-inline: var(--container-px);
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: var(--section-py);
+  position: relative;
+}
+
+/* ── Typography ────────────────────────────────────────────── */
+.text-gradient {
+  background: linear-gradient(135deg, #fff 0%, var(--accent-bright) 60%, var(--accent-mid) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-dark); }
+::-webkit-scrollbar-thumb {
+  background: var(--accent-deep);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent-mid); }
+
+/* ── Custom cursor ─────────────────────────────────────────── */
+body.has-cursor, body.has-cursor * { cursor: none !important; }
+
+/* ── Section labels ────────────────────────────────────────── */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent-bright);
+  margin-bottom: 1.25rem;
+}
+
+.section-label::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--accent-bright);
+  border-radius: 2px;
+}
+
+/* ── Buttons ───────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  transition: all 0.3s var(--ease);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.btn:hover::before { opacity: 0.06; }
+
+.btn-primary {
+  background: var(--accent-bright);
+  color: var(--bg-dark);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 24px rgba(15, 203, 84, 0.45), 0 4px 16px rgba(0,0,0,0.3);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.btn-outline:hover {
+  border-color: var(--border-hover);
+  background: var(--accent-glow);
+}
+
+/* ── Separator line ────────────────────────────────────────── */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}

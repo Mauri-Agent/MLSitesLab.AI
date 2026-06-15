@@ -1,0 +1,156 @@
+/* Interactive Funnel Styles */
+
+.interactive-funnel {
+  padding-block: var(--section-py);
+}
+
+.funnel-layout {
+  display: flex;
+  gap: 2rem;
+  min-height: 500px;
+  background: var(--bg-section);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  /* overflow: hidden removido — causaba que el scroll de la página se trabara */
+  position: relative;
+}
+
+@media (max-width: 1024px) {
+  .funnel-layout {
+    flex-direction: column;
+  }
+}
+
+.funnel-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.funnel-right {
+  flex: 1;
+  position: relative;
+  background: var(--bg-dark);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  min-height: 400px;
+}
+
+.node-graph-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* Command Terminal Styles */
+.terminal-container {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  flex: 1;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--border);
+}
+
+.terminal-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.terminal-title {
+  margin-left: auto;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.terminal-body {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.95rem;
+}
+
+.terminal-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  line-height: 1.5;
+}
+
+.terminal-message.assistant .terminal-prompt {
+  color: var(--accent-bright);
+}
+
+.terminal-message.user .terminal-prompt {
+  color: #fff;
+}
+
+.terminal-message.user .terminal-content {
+  color: var(--text-primary);
+}
+
+.terminal-message.assistant .terminal-content {
+  color: var(--text-secondary);
+}
+
+.terminal-prompt {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.terminal-input-form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--accent-bright);
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.terminal-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.terminal-input::placeholder {
+  color: var(--text-muted);
+}
+
+.terminal-typing-indicator {
+  display: inline-block;
+  animation: typingPulse 1s infinite alternate;
+}
+
+@keyframes typingPulse {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
+}

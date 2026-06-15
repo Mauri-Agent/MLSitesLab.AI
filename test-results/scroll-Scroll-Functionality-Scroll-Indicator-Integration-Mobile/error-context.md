@@ -1,0 +1,226 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: scroll.spec.ts >> Scroll Functionality >> Scroll Indicator Integration
+- Location: e2e/scroll.spec.ts:45:3
+
+# Error details
+
+```
+Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 0
+Received: 2
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - img [ref=e5]
+    - generic [ref=e52]: Initializing ML Engine
+  - main [ref=e53]:
+    - navigation "Navegación principal" [ref=e54]:
+      - generic [ref=e55]:
+        - link "MLSitesLab.AI — inicio" [ref=e56] [cursor=pointer]:
+          - /url: "#inicio"
+          - text: MLSitesLab.AI
+        - link "Contactar" [ref=e57] [cursor=pointer]:
+          - /url: "#servicios"
+        - button "Abrir menú" [ref=e58] [cursor=pointer]
+    - region "Presentación" [ref=e62]:
+      - generic [ref=e63]:
+        - status [ref=e65]: Sistemas Inteligentes · Activos
+        - heading "Automatizamos lo complejo. Potenciamos tu estrategia." [level=1] [ref=e67]:
+          - text: Automatizamos
+          - text: lo complejo.
+          - text: Potenciamos tu estrategia.
+        - paragraph [ref=e68]: "Soy Mauricio. Ayudo a equipos y empresas a delegar sus tareas repetitivas en sistemas de inteligencia artificial. Nuestro objetivo es simple: implementar tecnología de vanguardia que trabaje por ti, ahorrándote horas de trabajo manual para que puedas concentrarte en lo que verdaderamente importa."
+        - generic [ref=e69]:
+          - button "Ver servicios disponibles" [ref=e70] [cursor=pointer]:
+            - text: Ver Servicios
+            - img [ref=e71]
+          - button "Ver portfolio" [ref=e73] [cursor=pointer]: Portfolio
+      - generic [ref=e75]:
+        - region "Terminal demostrativa" [ref=e76]:
+          - generic [ref=e81]: mlsiteslab — bash
+          - generic [ref=e84]: $
+        - list "Estadísticas" [ref=e86]:
+          - listitem [ref=e87]:
+            - generic "14+ Automatizaciones" [ref=e88]: 14+
+            - generic [ref=e89]: Automatizaciones
+          - listitem [ref=e90]:
+            - generic "38h Ahorradas/sem" [ref=e91]: 38h
+            - generic [ref=e92]: Ahorradas/sem
+          - listitem [ref=e93]:
+            - generic "24/7 Disponibilidad" [ref=e94]: 24/7
+            - generic [ref=e95]: Disponibilidad
+      - button "Ir a servicios" [ref=e96] [cursor=pointer]:
+        - text: Scroll
+        - img [ref=e97]
+    - generic [ref=e100]:
+      - generic [ref=e101]: Interactive Auditor
+      - heading "Configure your AI Engine" [level=2] [ref=e102]
+      - generic [ref=e103]:
+        - generic [ref=e105]:
+          - generic [ref=e110]: AI_AUDITOR.exe
+          - generic [ref=e112]:
+            - generic [ref=e113]: AI_SYSTEM>
+            - generic [ref=e114]: ...
+          - generic [ref=e115]:
+            - generic [ref=e116]: USER>
+            - textbox "Processing..." [disabled] [ref=e117]
+        - img [ref=e120]:
+          - generic [ref=e127]: Business Core
+          - generic [ref=e129]: Industry Params
+          - generic [ref=e131]: Bottleneck
+          - generic [ref=e133]: Primary Goal
+          - generic [ref=e136]: AI Blueprint
+    - generic [ref=e139]:
+      - generic [ref=e140]:
+        - generic [ref=e141]: Servicios
+        - heading "Ecosistema de Soluciones" [level=2] [ref=e143]
+        - paragraph [ref=e144]: Tecnología de vanguardia aplicada para resolver problemas reales, optimizar tiempos y escalar tus operaciones.
+      - generic [ref=e145]:
+        - article "Automatización de Procesos" [ref=e146]:
+          - generic: "01"
+          - img [ref=e148]
+          - heading "Automatización de Procesos" [level=3] [ref=e151]
+          - paragraph [ref=e152]: Diseñamos e implementamos flujos automatizados con n8n y Make para conectar tus aplicaciones y eliminar horas de trabajo manual repetitivo.
+          - generic [ref=e153]: Ver más →
+        - article "Consultoría Estratégica IA" [ref=e154]:
+          - generic: "02"
+          - img [ref=e156]
+          - heading "Consultoría Estratégica IA" [level=3] [ref=e159]
+          - paragraph [ref=e160]: Analizamos las operaciones de tu empresa para identificar cuellos de botella y descubrir dónde la Inteligencia Artificial puede optimizar costos y escalar resultados.
+          - generic [ref=e161]: Ver más →
+        - article "Desarrollo de Soluciones Web" [ref=e162]:
+          - generic: "03"
+          - img [ref=e164]
+          - heading "Desarrollo de Soluciones Web" [level=3] [ref=e168]
+          - paragraph [ref=e169]: Creamos plataformas web modernas y personalizadas, integradas con la última tecnología y diseñadas para ofrecer una experiencia de usuario premium.
+          - generic [ref=e170]: Ver más →
+        - article "Agentes Inteligentes" [ref=e171]:
+          - generic: "04"
+          - img [ref=e173]
+          - heading "Agentes Inteligentes" [level=3] [ref=e176]
+          - paragraph [ref=e177]: Desarrollamos asistentes virtuales impulsados por IA, capaces de atender a tus clientes, clasificar leads o asistir a tu equipo 24/7 de forma autónoma.
+          - generic [ref=e178]: Ver más →
+    - generic [ref=e181]:
+      - generic [ref=e182]:
+        - generic [ref=e183]: Portfolio
+        - heading "Nuestros Proyectos" [level=2] [ref=e184]
+        - paragraph [ref=e185]: Casos de éxito y soluciones destacadas que hemos desarrollado para nuestros clientes.
+      - generic [ref=e186]:
+        - img [ref=e188]
+        - heading "Portfolio en Construcción" [level=3] [ref=e190]
+        - paragraph [ref=e191]: Próximamente estaremos agregando nuestros casos de éxito y proyectos destacados.
+        - generic [ref=e193]:
+          - generic [ref=e194]: Progreso
+          - generic [ref=e195]: 35%
+        - button "Notificarme cuando esté listo" [ref=e197] [cursor=pointer]
+    - contentinfo "Pie de página" [ref=e198]:
+      - generic [ref=e200]:
+        - generic [ref=e201]: MLSitesLab.AI
+        - paragraph [ref=e202]: © 2026 MLSitesLab.AI — Todos los derechos reservados.
+        - navigation "Links del footer" [ref=e203]:
+          - link "Inicio" [ref=e204] [cursor=pointer]:
+            - /url: "#inicio"
+          - link "Servicios" [ref=e205] [cursor=pointer]:
+            - /url: "#servicios"
+          - link "Portfolio" [ref=e206] [cursor=pointer]:
+            - /url: "#portfolio"
+```
+
+# Test source
+
+```ts
+  1  | import { test, expect } from '@playwright/test';
+  2  | 
+  3  | test.describe('Scroll Functionality', () => {
+  4  |   test.beforeEach(async ({ page }) => {
+  5  |     await page.goto('/');
+  6  |     await page.addStyleTag({
+  7  |       content: `
+  8  |         *, *::before, *::after {
+  9  |           animation-duration: 0s !important;
+  10 |           animation-delay: 0s !important;
+  11 |           transition-duration: 0s !important;
+  12 |           transition-delay: 0s !important;
+  13 |         }
+  14 |       `
+  15 |     });
+  16 |     // Wait for the loader to finish and app to mount
+  17 |     await page.waitForSelector('.app-container', { state: 'visible', timeout: 10000 });
+  18 |   });
+  19 | 
+  20 |   // Test 1: HTML Element Scroll Clearance
+  21 |   test('HTML Element Scroll Clearance', async ({ page }) => {
+  22 |     const overflowY = await page.evaluate(() => window.getComputedStyle(document.documentElement).overflowY);
+  23 |     expect(overflowY).not.toBe('hidden');
+  24 |   });
+  25 | 
+  26 |   // Test 2: Body Element Scroll Clearance
+  27 |   test('Body Element Scroll Clearance', async ({ page }) => {
+  28 |     const overflowY = await page.evaluate(() => window.getComputedStyle(document.body).overflowY);
+  29 |     expect(overflowY).not.toBe('hidden');
+  30 |   });
+  31 | 
+  32 |   // Test 3: Execution of Scroll Offsets
+  33 |   test('Execution of Scroll Offsets', async ({ page }) => {
+  34 |     const initialScrollY = await page.evaluate(() => window.scrollY);
+  35 |     expect(initialScrollY).toBe(0);
+  36 |     
+  37 |     await page.evaluate(() => window.scrollTo(0, 500));
+  38 |     await page.waitForTimeout(500);
+  39 |     
+  40 |     const scrolledY = await page.evaluate(() => window.scrollY);
+  41 |     expect(scrolledY).toBeGreaterThan(0);
+  42 |   });
+  43 | 
+  44 |   // Test 4: Scroll Indicator Integration
+  45 |   test('Scroll Indicator Integration', async ({ page }) => {
+  46 |     const initialScrollY = await page.evaluate(() => window.scrollY);
+> 47 |     expect(initialScrollY).toBe(0);
+     |                            ^ Error: expect(received).toBe(expected) // Object.is equality
+  48 |     
+  49 |     const scrollBtn = page.locator('#hero-scroll-btn');
+  50 |     await expect(scrollBtn).toBeVisible();
+  51 |     await scrollBtn.click();
+  52 |     
+  53 |     // Wait for smooth scroll animation to finish
+  54 |     await page.waitForTimeout(1500);
+  55 |     
+  56 |     const scrolledY = await page.evaluate(() => window.scrollY);
+  57 |     expect(scrolledY).toBeGreaterThan(0);
+  58 |   });
+  59 | 
+  60 |   // Test 5: Body Style Restored
+  61 |   test('Body Style Restored', async ({ page }, testInfo) => {
+  62 |     test.skip(testInfo.project.name !== 'Mobile', 'This test is only for Mobile project');
+  63 |     const hamburger = page.locator('#hamburger-btn');
+  64 |     await expect(hamburger).toBeVisible();
+  65 |     
+  66 |     // Open hamburger menu
+  67 |     await hamburger.click();
+  68 |     await page.waitForTimeout(500);
+  69 |     
+  70 |     const openOverflow = await page.evaluate(() => document.body.style.overflow);
+  71 |     expect(openOverflow).toBe('hidden');
+  72 |     
+  73 |     // Close hamburger menu
+  74 |     await hamburger.click();
+  75 |     await page.waitForTimeout(500);
+  76 |     
+  77 |     const closedOverflow = await page.evaluate(() => document.body.style.overflow);
+  78 |     expect(closedOverflow === '' || closedOverflow === 'visible').toBe(true);
+  79 |   });
+  80 | });
+  81 | 
+```
