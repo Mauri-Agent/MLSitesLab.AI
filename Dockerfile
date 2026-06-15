@@ -6,6 +6,10 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --frozen-lockfile
 
+# Pasar variable de entorno de EasyPanel al build de Vite
+ARG VITE_OPENAI_API_KEY
+ENV VITE_OPENAI_API_KEY=$VITE_OPENAI_API_KEY
+
 # Copiar el código fuente
 COPY . .
 
