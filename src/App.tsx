@@ -5,6 +5,7 @@ import Hero from './components/Hero';
 import Services from './components/Services';
 import Portfolio from './components/Portfolio';
 import Footer from './components/Footer';
+import Cursor from './components/Cursor';
 import Loader from './components/Loader';
 import InteractiveFunnel from './components/InteractiveFunnel';
 import WhatsappButton from './components/WhatsappButton';
@@ -21,6 +22,7 @@ function App() {
 
       {!loading && (
         <main className="app-container">
+          <Cursor />
           <Navbar />
           <Hero />
           <div className="divider" />
