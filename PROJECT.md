@@ -25,10 +25,10 @@
 |---|------|-------|-------------|--------|
 | 1 | Componentization & Layout | Refactor `App.tsx` into modular components. Base "Dark Green" palette. | none | DONE |
 | 2 | Bug Fixes, 3D Loader & layout re-centering | Move `InteractiveFunnel` below Hero. Fix double greeting in chat, scroll, auto-scroll. Add 3D Neural Network loader. | M1 | DONE |
-| 3 | Scroll & Chat Autofocus | Optimize viewport scroll. Premium capsule scrollbar custom styles. Autofocus terminal chat input. | M2 | IN_PROGRESS |
-| 4 | AI Node Tracing | AI tags in systemPrompt. Frontend activation of nodes & stripping of tags. | M3 | IN_PROGRESS |
-| 5 | E2E Test Suite Fixing | Update Playwright test suite to pass 100%. Fix text search, typing lifecycle, greeting text, scroll btn force click. | M4 | IN_PROGRESS |
-| 6 | Deployment & Audit | EasyPanel deployment and Forensic integrity audit. | M5 | PLANNED |
+| 3 | Scroll & Chat Autofocus | Optimize viewport scroll. Premium capsule scrollbar custom styles. Autofocus terminal chat input. | M2 | DONE |
+| 4 | AI Node Tracing | AI tags in systemPrompt. Frontend activation of nodes & stripping of tags. | M3 | DONE |
+| 5 | E2E Test Suite Fixing | Update Playwright test suite to pass 100%. Fix text search, typing lifecycle, greeting text, scroll btn force click. | M4 | DONE |
+| 6 | Deployment & Audit | EasyPanel deployment and Forensic integrity audit. | M5 | DONE |
 
 ## Interface Contracts
 ### App ↔ Components

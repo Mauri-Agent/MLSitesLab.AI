@@ -26,9 +26,10 @@ test.describe('Empirical Challenges for Milestone 2', () => {
 
   test('Correctness: Parallax logic in Hero.tsx', async ({ page }) => {
     await page.goto('/');
+    await page.waitForSelector('.app-container', { state: 'visible', timeout: 10000 });
     
     // Find the hero container
-    const heroContent = page.locator('.hero-content');
+    const heroContent = page.locator('.hero-text');
     await expect(heroContent).toBeVisible();
 
     // Scroll down to trigger the parallax
@@ -55,13 +56,14 @@ test.describe('Empirical Challenges for Milestone 2', () => {
 
   test('Correctness: Cursor transition jitter fixed', async ({ page }) => {
     await page.goto('/');
+    await page.waitForSelector('.app-container', { state: 'visible', timeout: 10000 });
 
     await page.mouse.move(100, 100);
     
-    const customCursor = page.locator('.has-custom-cursor');
+    const customCursor = page.locator('.has-cursor');
     await expect(customCursor).toBeAttached();
 
-    const cursorEles = page.locator('div[style*="z-index: 9999"]');
+    const cursorEles = page.locator('.cursor-dot');
     await expect(cursorEles).toBeVisible();
 
     const transitionStyle = await cursorEles.evaluate((el) => window.getComputedStyle(el).transition);

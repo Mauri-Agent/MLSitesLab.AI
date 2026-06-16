@@ -68,8 +68,7 @@ body {
   background-color: var(--bg-dark);
   color: var(--text-primary);
   line-height: 1.65;
-  overflow-x: hidden;
-  overflow-y: visible;
+  overflow: visible;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
