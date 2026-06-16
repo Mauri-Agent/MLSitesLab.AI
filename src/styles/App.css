@@ -436,6 +436,9 @@
   overflow: hidden;
   transition: border-color 0.35s var(--ease), background 0.35s var(--ease);
   cursor: default;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
 .service-card::before {
@@ -709,6 +712,9 @@
   overflow: hidden;
   transition: border-color 0.3s, box-shadow 0.3s;
   cursor: default;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 .project-card:hover {
   border-color: var(--border-hover);
