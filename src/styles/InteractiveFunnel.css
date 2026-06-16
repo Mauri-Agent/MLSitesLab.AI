@@ -21,6 +21,7 @@
   display: flex;
   gap: 2rem;
   flex: 1;
+  height: 550px; /* fixed height on desktop */
   min-height: 450px;
   background: var(--bg-section);
   border: 1px solid var(--border);
@@ -42,6 +43,10 @@
   .funnel-layout {
     flex-direction: column;
     min-height: auto;
+    height: auto; /* reset fixed height on mobile */
+  }
+  .terminal-container {
+    max-height: 450px; /* limit terminal height on mobile so it scrolls */
   }
   .funnel-right {
     min-height: 350px;
