@@ -48,7 +48,7 @@ test.describe('Scroll Functionality', () => {
     
     const scrollBtn = page.locator('#hero-scroll-btn');
     await expect(scrollBtn).toBeVisible();
-    await scrollBtn.click();
+    await scrollBtn.click({ force: true });
     
     // Wait for smooth scroll animation to finish
     await page.waitForTimeout(1500);

@@ -82,3 +82,47 @@ En lugar de poner el `InteractiveFunnel` (Foto 2) arriba del todo como el nuevo 
 1. Mantener la sección de bienvenida/Hero original (componente `Hero.tsx` / Foto 1 con el título "lo complejo. Potenciamos tu estrategia.", la terminal de estadísticas a la derecha, los botones "Ver Servicios"/"Portfolio" y las tarjetas de stats abajo) arriba de todo, actuando como la cabecera principal (Hero).
 2. Colocar el `InteractiveFunnel` (componente `InteractiveFunnel.tsx` / Foto 2, con el chat y el grafo) inmediatamente debajo de esa sección de bienvenida/cabecera (`Hero.tsx`).
 
+## Follow-up — 2026-06-16T00:47:56-03:00
+
+The goal of this project is to optimize the scroll mechanics and custom scrollbar aesthetics, add autofocus to the sales funnel chat input, implement intelligent graph node activation driven by AI tags, fix all failing E2E Playwright tests, and deploy the updated application.
+
+Working directory: `/home/mauriciolopez/Documentos/Modelos De Negocios/Web MLSitesLab.AI`
+Integrity mode: `development`
+
+## Requirements
+
+### R1. Native Scroll Mechanics & Premium Scrollbar Aesthetics
+Ensure the main viewport scroll is entirely native and smooth. Prevent Chrome from rendering duplicate scrollbars on `html` and `body` or container elements. Customize the scrollbar in Webkit browsers to show a premium, capsule-style green thumb with a dark track, with a width of 10-12px.
+
+### R2. Sales Funnel Chat Autofocus
+Implement autofocus on the terminal chat input element (`.terminal-input`). The input must automatically receive focus on component mount, after the user dispatches a message, and when the AI auditor finishes typing (`isTyping` changes to `false`).
+
+### R3. AI-Driven Intelligent Graph Node Tracing
+Update the graph node activation so it is determined by the AI auditor's analysis. Define milestones in the `systemPrompt` (e.g. `[NODE: industry]`, `[NODE: bottleneck]`, `[NODE: goal]`, `[NODE: solution]`) that the AI outputs when a valid response is received. The frontend must parse these tags to activate the corresponding nodes and strip the tags from the visible terminal message text before rendering.
+
+### R4. E2E Test Suite Verification and Fixes
+Ensure all tests in `e2e/` pass.
+- In `loader.spec.ts`, update the expected text search from English `"Initializing ML Engine"` to the Spanish `"Inicializando ML Engine"`.
+- Simulate typing of the initial greeting on mount in `InteractiveFunnel.tsx` and ensure the typing indicator is visible first, then hidden, to satisfy the `Initial Typing Indicator Lifecycle` test.
+- Update the greeting text to include the word `"escaneo"` to satisfy the `Validate Greeting Content Persona` test.
+- Fix the scroll stability timeout on `#hero-scroll-btn` by using `{ force: true }` in `scrollBtn.click()`.
+
+### R5. EasyPanel Deployment
+Commit all changes to GitHub and ensure the build and deployment on EasyPanel are triggered and complete successfully.
+
+## Acceptance Criteria
+
+### Scroll and UI Aesthetics
+- [ ] Only one scrollbar (the main viewport scrollbar) is visible. No duplicate scrollbars appear.
+- [ ] Scrollbar thumb is customized to be a premium neon-green capsule with a dark track (width: 10-12px).
+- [ ] Terminal input receives focus on mount, message updates, and response completion.
+
+### Chat & Graph Node Logic
+- [ ] Nodos in NodeGraph only activate when the corresponding tag `[NODE: <id>]` is present in the assistant's message.
+- [ ] All tags like `[NODE: ...]` and `[ANALYSIS_COMPLETE]` are completely stripped from the visible text in the chat bubble UI.
+- [ ] An initial typing indicator is displayed on page load, followed by the greeting text.
+
+### E2E Testing & Deployment
+- [ ] All E2E Playwright tests run and pass without timeout or assertion failures.
+- [ ] Code is pushed to GitHub and deploys successfully on EasyPanel.
+

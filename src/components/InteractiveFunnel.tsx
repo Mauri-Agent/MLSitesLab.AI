@@ -9,18 +9,17 @@ const systemPrompt = `Sos el "AI_AUDITOR", un sistema de inteligencia artificial
 Tono: profesional, directo, con estilo "hacker/cyberpunk" sutil. Usá frases cortas como "Datos recibidos.", "Escaneando...", "Procesando arquitectura...".
 Idioma: español uruguayo neutro. Usá "vos", "tu negocio", "tu empresa".
 
-Llevá al visitante por un funnel de 3 pasos, UNA pregunta por vez:
-1. ¿A qué se dedica la empresa y cuál es su producto o servicio principal?
-2. ¿Cuál es el mayor cuello de botella operativo que les quita tiempo o dinero hoy?
-3. ¿Qué resultado concreto querés lograr con IA? (bajar costos, escalar sin contratar más, automatizar atención al cliente, etc.)
-
-Después de las 3 respuestas, generá un diagnóstico breve y una propuesta de solución con IA personalizada. Mencioná que el equipo de MLSitesLab.AI puede implementarla. Finalizá exactamente con "[ANALYSIS_COMPLETE]".
+Llevá al visitante por un funnel de 3 pasos, UNA pregunta por vez. Además, debes incluir tags especiales según el paso actual:
+1. Al procesar o preguntar sobre el sector, producto o servicio principal, incluye el tag "[NODE: industry]".
+2. Al procesar o preguntar sobre el mayor cuello de botella operativo, incluye el tag "[NODE: bottleneck]".
+3. Al procesar o preguntar sobre el resultado concreto/objetivo a lograr con IA, incluye el tag "[NODE: goal]".
+4. Al generar el diagnóstico y plan final (solución), incluye el tag "[NODE: solution]" y finalizá exactamente con "[ANALYSIS_COMPLETE]".
 
 Máximo 3-4 líneas por mensaje. No hagas más de una pregunta a la vez.`;
 
-// ── Saludo inicial hardcodeado (instantáneo, sin API) ────────────────────────
+// ── Saludo inicial hardcodeado (con simulación de escritura) ────────────────────────
 const GREETING = `⚡ Conexión establecida. Soy el AI_AUDITOR de MLSitesLab.AI.
-En los próximos minutos voy a analizar tu negocio y mostrarte exactamente dónde la IA puede generar más impacto.
+En los próximos minutos voy a realizar un escaneo de tu negocio y mostrarte exactamente dónde la IA puede generar más impacto.
 Contame: ¿a qué se dedica tu empresa y cuál es tu producto o servicio principal?`;
 
 const ALL_NODES: NodeDef[] = [
@@ -42,26 +41,37 @@ const ALL_EDGES: EdgeDef[] = [
 const generateId = () => Math.random().toString(36).substring(2, 9);
 
 const InteractiveFunnel = () => {
-  // Arrancamos con el saludo ya en el historial — sin API call
+  // Arrancamos con la simulación de escritura del saludo inicial
   const [messages, setMessages] = useState<Message[]>([
     { id: 'sys',      role: 'system',    content: systemPrompt },
-    { id: 'greeting', role: 'assistant', content: GREETING     },
   ]);
-  const [isTyping, setIsTyping]     = useState(false);
+  const [isTyping, setIsTyping]     = useState(true);
   const [activeNodeIds, setActiveNodeIds] = useState<string[]>(['core']);
   const abortRef = useRef<AbortController | null>(null);
 
-  // Actualizar nodos según progreso del usuario
+  // Simulación de escritura del saludo inicial
   useEffect(() => {
-    const userCount = messages.filter(m => m.role === 'user').length;
-    const nodes = ['core'];
-    if (userCount >= 1) nodes.push('industry');
-    if (userCount >= 2) nodes.push('bottleneck');
-    if (userCount >= 3) nodes.push('goal');
-    if (messages.some(m => m.content.includes('[ANALYSIS_COMPLETE]'))) {
-      nodes.push('solution');
-    }
-    setActiveNodeIds(nodes);
+    const timer = setTimeout(() => {
+      setMessages(prev => [...prev, { id: 'greeting', role: 'assistant', content: GREETING }]);
+      setIsTyping(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Actualizar nodos según progreso del usuario usando tags
+  useEffect(() => {
+    const nodes = new Set<string>(['core']);
+    messages.forEach(msg => {
+      const regex = /\[NODE:\s*(\w+)\]/g;
+      let match;
+      while ((match = regex.exec(msg.content)) !== null) {
+        nodes.add(match[1]);
+      }
+      if (msg.content.includes('[ANALYSIS_COMPLETE]')) {
+        nodes.add('solution');
+      }
+    });
+    setActiveNodeIds(Array.from(nodes));
   }, [messages]);
 
   const fetchAIResponse = async (history: Message[]) => {

@@ -13,9 +13,17 @@ interface CommandTerminalProps {
   isTyping: boolean;
 }
 
+const cleanMessageContent = (content: string) => {
+  return content
+    .replace(/\[NODE:\s*\w+\]/g, '')
+    .replace(/\[ANALYSIS_COMPLETE\]/g, '')
+    .trim();
+};
+
 const CommandTerminal = ({ messages, onSendMessage, isTyping }: CommandTerminalProps) => {
   const [input, setInput] = useState('');
   const terminalBodyRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (terminalBodyRef.current) {
@@ -23,6 +31,17 @@ const CommandTerminal = ({ messages, onSendMessage, isTyping }: CommandTerminalP
         top: terminalBodyRef.current.scrollHeight,
         behavior: 'smooth',
       });
+    }
+  }, [messages, isTyping]);
+
+  useEffect(() => {
+    if (!isTyping) {
+      const timer = setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 30);
+      return () => clearTimeout(timer);
     }
   }, [messages, isTyping]);
 
@@ -54,7 +73,7 @@ const CommandTerminal = ({ messages, onSendMessage, isTyping }: CommandTerminalP
               <span className="terminal-prompt">
                 {msg.role === 'assistant' ? 'AI_SYSTEM> ' : 'USER> '}
               </span>
-              <span className="terminal-content">{msg.content}</span>
+              <span className="terminal-content">{cleanMessageContent(msg.content)}</span>
             </motion.div>
           ))}
           {isTyping && (
@@ -75,13 +94,13 @@ const CommandTerminal = ({ messages, onSendMessage, isTyping }: CommandTerminalP
       <form onSubmit={handleSubmit} className="terminal-input-form">
         <span className="terminal-prompt">USER&gt; </span>
         <input
+          ref={inputRef}
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           disabled={isTyping}
           className="terminal-input"
           placeholder={isTyping ? "Procesando..." : "Escribí tu mensaje..."}
-          autoFocus={false}
         />
       </form>
     </div>

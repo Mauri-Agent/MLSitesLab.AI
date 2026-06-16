@@ -8,7 +8,7 @@ test.describe('3D Loader Lifecycle', () => {
   // Test 1: WebGL Canvas Visibility on Load
   test('WebGL Canvas Visibility on Load', async ({ page }) => {
     // Loader text should be visible on load
-    const loaderText = page.locator('text=Initializing ML Engine');
+    const loaderText = page.locator('text=Inicializando ML Engine');
     await expect(loaderText).toBeVisible();
     
     // WebGL Canvas should be visible (This is expected to fail as no canvas is implemented)
@@ -39,7 +39,7 @@ test.describe('3D Loader Lifecycle', () => {
 
   // Test 4: Loader Lifecycle Complete
   test('Loader Lifecycle Complete', async ({ page }) => {
-    const loaderText = page.locator('text=Initializing ML Engine');
+    const loaderText = page.locator('text=Inicializando ML Engine');
     await expect(loaderText).toBeVisible();
     
     // Wait for the loader lifecycle to finish (3.2 seconds total timer + 0.6 seconds transition)

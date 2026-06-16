@@ -183,10 +183,11 @@ const Hero = () => {
       </motion.div>
 
       {/* Scroll indicator */}
-      <motion.button
+      <button
         onClick={scrollToServices}
         aria-label="Ir a servicios"
         id="hero-scroll-btn"
+        className="hero-scroll-btn-animated"
         style={{
           position: 'absolute',
           bottom: '2rem',
@@ -204,14 +205,10 @@ const Hero = () => {
           textTransform: 'uppercase',
           cursor: 'pointer',
         }}
-        animate={{ y: [0, 6, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
       >
         Scroll
         <ChevronDown size={16} aria-hidden="true" />
-      </motion.button>
+      </button>
     </section>
   );
 };
