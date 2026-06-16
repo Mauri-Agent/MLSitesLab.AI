@@ -62,6 +62,7 @@ const InteractiveFunnel = () => {
   useEffect(() => {
     const nodes = new Set<string>(['core']);
     messages.forEach(msg => {
+      if (msg.role !== 'assistant') return;
       const regex = /\[NODE:\s*(\w+)\]/g;
       let match;
       while ((match = regex.exec(msg.content)) !== null) {
