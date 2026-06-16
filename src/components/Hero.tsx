@@ -53,7 +53,8 @@ const Hero = () => {
   const scrollToServices = () => {
     const el = document.querySelector('#servicios');
     if (el) {
-      const top = (el as HTMLElement).getBoundingClientRect().top + window.scrollY - 72;
+      const computedPaddingTop = parseFloat(window.getComputedStyle(el).paddingTop) || 0;
+      const top = (el as HTMLElement).getBoundingClientRect().top + window.scrollY - 72 + computedPaddingTop;
       window.scrollTo({ top, behavior: 'smooth' });
     }
   };
@@ -126,7 +127,8 @@ const Hero = () => {
             onClick={() => {
               const el = document.querySelector('#portfolio');
               if (el) {
-                const top = (el as HTMLElement).getBoundingClientRect().top + window.scrollY - 72;
+                const computedPaddingTop = parseFloat(window.getComputedStyle(el).paddingTop) || 0;
+                const top = (el as HTMLElement).getBoundingClientRect().top + window.scrollY - 72 + computedPaddingTop;
                 window.scrollTo({ top, behavior: 'smooth' });
               }
             }}

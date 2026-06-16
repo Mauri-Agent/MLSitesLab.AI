@@ -1,13 +1,27 @@
 /* Interactive Funnel Styles */
 
 .interactive-funnel {
-  padding-block: var(--section-py);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: calc(var(--nav-h) + 1.5rem);
+  padding-bottom: 1.5rem;
+  box-sizing: border-box;
+}
+
+.interactive-funnel > .container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  justify-content: center;
 }
 
 .funnel-layout {
   display: flex;
   gap: 2rem;
-  min-height: 500px;
+  flex: 1;
+  min-height: 450px;
   background: var(--bg-section);
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
@@ -17,8 +31,20 @@
 }
 
 @media (max-width: 1024px) {
+  .interactive-funnel {
+    min-height: auto;
+    padding-block: var(--section-py);
+  }
+  .interactive-funnel > .container {
+    display: block;
+    height: auto;
+  }
   .funnel-layout {
     flex-direction: column;
+    min-height: auto;
+  }
+  .funnel-right {
+    min-height: 350px;
   }
 }
 
@@ -35,7 +61,6 @@
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
   overflow: hidden;
-  min-height: 400px;
 }
 
 .node-graph-container {

@@ -35,7 +35,7 @@ const CommandTerminal = ({ messages, onSendMessage, isTyping }: CommandTerminalP
   }, [messages, isTyping]);
 
   useEffect(() => {
-    if (!isTyping) {
+    if (!isTyping && messages.some(m => m.role === 'user')) {
       const timer = setTimeout(() => {
         if (inputRef.current) {
           inputRef.current.focus();

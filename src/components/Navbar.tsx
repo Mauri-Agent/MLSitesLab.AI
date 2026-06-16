@@ -32,9 +32,14 @@ const Navbar = () => {
 
   const handleNavClick = (href: string) => {
     setMenuOpen(false);
+    if (href === '#inicio') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     const el = document.querySelector(href);
     if (el) {
-      const top = (el as HTMLElement).getBoundingClientRect().top + window.scrollY - 72;
+      const computedPaddingTop = parseFloat(window.getComputedStyle(el).paddingTop) || 0;
+      const top = (el as HTMLElement).getBoundingClientRect().top + window.scrollY - 72 + computedPaddingTop;
       window.scrollTo({ top, behavior: 'smooth' });
     }
   };

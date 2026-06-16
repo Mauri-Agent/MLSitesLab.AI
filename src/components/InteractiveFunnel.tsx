@@ -145,29 +145,31 @@ const InteractiveFunnel = () => {
   };
 
   return (
-    <div className="interactive-funnel section container">
-      <div className="section-label">Auditor Inteligente</div>
-      <h2 className="text-gradient" style={{ fontSize: '2.5rem', marginBottom: '2rem' }}>
-        Configurá tu Motor de IA
-      </h2>
+    <section id="funnel" className="interactive-funnel section">
+      <div className="container">
+        <div className="section-label">Auditor Inteligente</div>
+        <h2 className="text-gradient funnel-title" style={{ fontSize: '2.5rem', marginBottom: '2rem' }}>
+          Configurá tu Motor de IA
+        </h2>
 
-      <div className="funnel-layout">
-        <div className="funnel-left">
-          <CommandTerminal
-            messages={messages}
-            onSendMessage={handleSendMessage}
-            isTyping={isTyping}
-          />
-        </div>
-        <div className="funnel-right">
-          <NodeGraph
-            nodes={ALL_NODES}
-            edges={ALL_EDGES}
-            activeNodeIds={activeNodeIds}
-          />
+        <div className="funnel-layout">
+          <div className="funnel-left">
+            <CommandTerminal
+              messages={messages}
+              onSendMessage={handleSendMessage}
+              isTyping={isTyping}
+            />
+          </div>
+          <div className="funnel-right">
+            <NodeGraph
+              nodes={ALL_NODES}
+              edges={ALL_EDGES}
+              activeNodeIds={activeNodeIds}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
