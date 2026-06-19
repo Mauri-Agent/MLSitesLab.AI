@@ -20,8 +20,8 @@
 .funnel-layout {
   display: flex;
   gap: 2rem;
-  flex: 1;
   height: 550px; /* fixed height on desktop */
+  max-height: 550px; /* strict limit on desktop */
   min-height: 450px;
   background: var(--bg-section);
   border: 1px solid var(--border);
@@ -44,6 +44,7 @@
     flex-direction: column;
     min-height: auto;
     height: auto; /* reset fixed height on mobile */
+    max-height: none; /* override desktop max-height */
   }
   .terminal-container {
     max-height: 450px; /* limit terminal height on mobile so it scrolls */
@@ -58,6 +59,7 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
+  max-height: 100%;
 }
 
 .funnel-right {
@@ -85,6 +87,7 @@
   flex: 1;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
   min-height: 0;
+  max-height: 100%;
 }
 
 .terminal-header {
