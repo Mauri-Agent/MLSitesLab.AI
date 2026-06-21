@@ -10,6 +10,23 @@ test.describe('Responsive Layout', () => {
   // Test 1: Document-Level No-Overflow (Mobile 375px)
   test('Document-Level No-Overflow (Mobile 375px)', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'Mobile', 'This test is only for Mobile project');
+    const overflowingElements = await page.evaluate(() => {
+      const elements = Array.from(document.querySelectorAll('*'));
+      return elements
+        .map(el => {
+          const rect = el.getBoundingClientRect();
+          return {
+            tagName: el.tagName,
+            id: el.id,
+            className: el.className,
+            width: rect.width,
+            left: rect.left,
+            right: rect.right
+          };
+        })
+        .filter(info => info.width > 375);
+    });
+    console.log('OVERFLOWING ELEMENTS:', JSON.stringify(overflowingElements, null, 2));
     const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
     const clientWidth = await page.evaluate(() => document.documentElement.clientWidth);
     expect(scrollWidth).toBeLessThanOrEqual(clientWidth);

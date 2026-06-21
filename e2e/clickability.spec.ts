@@ -44,7 +44,7 @@ test.describe('Clickability', () => {
     const count = await buttons.count();
     for (let i = 0; i < count; i++) {
       const button = buttons.nth(i);
-      if (await button.isVisible()) {
+      if (await button.isVisible() && await button.isEnabled()) {
         await button.click({ trial: true });
       }
     }

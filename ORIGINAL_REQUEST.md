@@ -124,5 +124,62 @@ Commit all changes to GitHub and ensure the build and deployment on EasyPanel ar
 
 ### E2E Testing & Deployment
 - [ ] All E2E Playwright tests run and pass without timeout or assertion failures.
-- [ ] Code is pushed to GitHub and deploys successfully on EasyPanel.
+
+
+## Follow-up — 2026-06-19T14:58:06Z
+
+Diseñar y desarrollar un módulo interactivo en la sección de proyectos de MLSitesLab.AI que presente de forma visual e impactante el caso de éxito de la automatización post-venta desarrollada para Vantrek. La solución debe simular el flujo completo del sistema (Mercado Libre -> Procesamiento de IA -> Base de datos/Sheets -> Notificación/Control en Telegram) para que los leads de la agencia comprendan el valor real del servicio.
+
+Working directory: `/home/mauriciolopez/Documentos/Modelos De Negocios/Web MLSitesLab.AI`
+Integrity mode: development
+
+## Asignación de Roles del Equipo
+*   **Lucía Fernández (Estratega de Marketing Orgánico & Copywriting):** Responsable de redactar todos los textos del caso de éxito, estructurando la propuesta de valor (ahorro de tiempo, eliminación de errores, atención 24/7) y el viaje del lead.
+*   **Tomás (Arquitecto Frontend & UI/UX):** Responsable de diseñar e implementar el simulador interactivo, las micro-animaciones cyberpunk, el layout responsive y los estilos visuales en el componente.
+*   **Andrés (Arquitecto de Sistemas):** Responsable de revisar la estructura del código, optimizar componentes y asegurar que no haya regresiones en el flujo general del sitio.
+
+## Requirements
+
+### R1. Estructura Persuasiva del Caso de Éxito (Marketing y Redacción)
+Escribir el caso de estudio de Vantrek sin textos genéricos o de relleno (placeholders), enfocado en la conversión de leads:
+- **Problema:** Describir el cuello de botella que tenía Vantrek (atención lenta post-venta, errores en entregas y retrasos en facturación en Mercado Libre).
+- **Solución:** Explicar el sistema implementado de forma clara y accesible (asistente de IA entrenado, sincronización en tiempo real y alertas de aprobación).
+- **Resultados/Métricas (simulados pero realistas):** Destacar el impacto (ej. 95% de mensajes automatizados, tiempo de respuesta < 2 min, 0 errores en planillas).
+
+### R2. Simulador de Flujo Interactivo (Frontend)
+Desarrollar un componente interactivo en la sección de portafolio que simule en tiempo real el funcionamiento de la automatización:
+- **Disparador:** Un botón destacado que invite al usuario a "Simular Compra" o "Ver Automatización en Acción".
+- **Etapa 1 (Entrada):** Mostrar un chat mockup de Mercado Libre donde un cliente ficticio envía un mensaje confuso de post-venta (ej. "Hola, compré pero necesito cambiar la dirección de envío y quiero factura A").
+- **Etapa 2 (Cerebro IA):** Mostrar un efecto visual o consola simplificada que simule la "lectura e interpretación de intenciones" por parte de la IA (clasificando en "Acuerdo de Entrega" y "Facturación").
+- **Etapa 3 (Acción/Guardado):** Mostrar una representación visual de Google Sheets/Base de datos donde se añade una fila automáticamente con la información extraída.
+- **Etapa 4 (Alerta Humana):** Mostrar un mockup de Telegram que reciba el mensaje del bot: "⚠️ Alerta Post-Venta Vantrek: Nacho Pisano solicita cambio de dirección. [Aprobar] [Rechazar]" y que al hacer clic simule completar el proceso con éxito.
+
+### R3. Diseño Visual y Estilos (UI/UX)
+- Integrar el nuevo componente y layouts en la sección actual de `Portfolio.tsx` de forma nativa.
+- Utilizar la paleta de colores del Design System actual (negros profundos, bordes semitransparentes, detalles y glows en verde neón `--accent-bright`).
+- Asegurar que todas las animaciones y transiciones de Framer Motion sean suaves y coherentes con el resto de la web.
+- El diseño debe ser 100% responsive (mobile-friendly), reordenando el simulador de forma vertical en pantallas pequeñas.
+
+### R4. Verificación y Calidad de Código
+- El proyecto debe compilar correctamente mediante `npm run build` sin errores de compilación de TypeScript o Vite.
+- No se deben introducir librerías de diagramación externas a menos que sea estrictamente necesario; se debe priorizar el uso de CSS/SVG nativo y Framer Motion.
+
+## Acceptance Criteria
+
+### Presentación de Contenido
+- [ ] No existen textos de relleno ("Lorem Ipsum", "Coming Soon" al 35%, etc.) en la sección de portafolio.
+- [ ] Los textos están redactados en español con foco en la conversión de clientes potenciales de MLSitesLab.AI.
+
+### Interactividad del Simulador
+- [ ] El botón de simulación activa la secuencia animada de 4 etapas de forma fluida.
+- [ ] El usuario puede reiniciar la simulación o interactuar con el botón del mockup de Telegram para finalizar el flujo.
+- [ ] Cada etapa de la simulación destaca visualmente (glow, cambio de opacidad o flechas de conexión activas) cuando la información está pasando por ella.
+
+### UI/UX e Integración
+- [ ] El simulador se ve perfectamente centrado y escalado tanto en pantallas de escritorio (desktop) como en celulares (mobile).
+- [ ] Los colores, tipografías y sombras respetan exactamente las variables de `--bg-dark`, `--accent-bright`, y la estética cyberpunk de la web.
+
+### Robustez Técnica
+- [ ] La aplicación web compila sin errores ejecutando `npm run build`.
+- [ ] No existen errores o warnings de React en la consola del desarrollador durante la ejecución local de la simulación.
 

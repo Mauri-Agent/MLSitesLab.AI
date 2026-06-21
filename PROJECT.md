@@ -29,6 +29,7 @@
 | 4 | AI Node Tracing | AI tags in systemPrompt. Frontend activation of nodes & stripping of tags. | M3 | DONE |
 | 5 | E2E Test Suite Fixing | Update Playwright test suite to pass 100%. Fix text search, typing lifecycle, greeting text, scroll btn force click. | M4 | DONE |
 | 6 | Deployment & Audit | EasyPanel deployment and Forensic integrity audit. | M5 | DONE |
+| 7 | Vantrek Simulation Module | Design and develop the interactive Vantrek post-sale automation simulation module in the projects/portfolio section, including copywriting, responsive UI mockup, and Framer Motion flow. | M6 | IN_PROGRESS |
 
 ## Interface Contracts
 ### App ↔ Components

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('3D Loader Lifecycle', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
   });
 
   // Test 1: WebGL Canvas Visibility on Load
