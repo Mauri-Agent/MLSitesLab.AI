@@ -69,11 +69,11 @@ export default function VantrekCaseStudy({ navigate }: VantrekCaseStudyProps) {
             </p>
             <ul className="case-list">
               <li><span>⚠️</span> <em>"Necesito cambiar la dirección de entrega porque me equivoqué."</em></li>
-              <li><span>⚠️</span> <em>"Quiero factura A, acá te dejo mi CUIT."</em></li>
+              <li><span>⚠️</span> <em>"Quiero factura con RUT, te paso mi RUT."</em></li>
               <li><span>⚠️</span> <em>"¿Cuándo llega mi pedido?"</em></li>
             </ul>
             <p className="case-impact">
-              <strong>Consecuencias operativas:</strong> El equipo pasaba de 4 a 6 horas diarias copiando y pegando datos manualmente de Mercado Libre a planillas de despacho, respuestas demoradas hasta por 12 horas, y errores humanos de envío y demoras en facturación.
+              <strong>Consecuencias operativas:</strong> El equipo pasaba horas cada día tratando de responder los mensajes pendientes y copiando datos de forma manual, lo que resultaba en respuestas demoradas de hasta más de 12 horas y demoras en la facturación.
             </p>
           </div>
 
@@ -88,9 +88,9 @@ export default function VantrekCaseStudy({ navigate }: VantrekCaseStudyProps) {
             </p>
             <ul className="case-list">
               <li><span>✓</span> <strong>Sincronización en tiempo real:</strong> Captura inmediata de cada mensaje post-venta en Mercado Libre.</li>
-              <li><span>✓</span> <strong>Cerebro de Clasificación de IA (NLP):</strong> Un asistente entrenado para clasificar intenciones y extraer datos (direcciones modificadas, CUITs) con un 98% de precisión.</li>
-              <li><span>✓</span> <strong>Auto-registro estructurado:</strong> Inserción automática de datos del cliente en Google Sheets de despacho consolidada.</li>
-              <li><span>✓</span> <strong>Alertas de Aprobación Humana (Telegram Bot):</strong> Para cambios críticos, el bot envía una alerta con botones interactivos de <code>[Aprobar]</code> y <code>[Rechazar]</code>. Al aprobar, los datos se actualizan y se confirma al cliente al instante.</li>
+              <li><span>✓</span> <strong>Cerebro de Clasificación de IA (NLP):</strong> Un asistente entrenado para clasificar intenciones y extraer datos (direcciones modificadas, RUTs) con un 98% de precisión.</li>
+              <li><span>✓</span> <strong>Auto-registro estructurado:</strong> Inserción automática de datos del cliente en la base de datos de despacho consolidada.</li>
+              <li><span>✓</span> <strong>Alertas de Aprobación Humana (Telegram Bot):</strong> Para cambios críticos, el bot envía una alerta con botones interactivos. Al aprobar, los datos se actualizan y se confirma al cliente al instante.</li>
             </ul>
           </div>
 
