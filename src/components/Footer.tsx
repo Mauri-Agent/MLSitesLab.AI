@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone } from 'lucide-react';
 
@@ -7,7 +8,43 @@ const links = [
   { href: '#portfolio', label: 'Portfolio' },
 ];
 
-export default function Footer() {
+interface FooterProps {
+  currentPath?: string;
+  navigate?: (path: string) => void;
+}
+
+export default function Footer({ currentPath = '/', navigate }: FooterProps) {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    if (currentPath !== '/' && navigate) {
+      navigate('/');
+      setTimeout(() => {
+        if (href === '#inicio') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+        const el = document.querySelector(href);
+        if (el) {
+          const computedPaddingTop = parseFloat(window.getComputedStyle(el).paddingTop) || 0;
+          const top = (el as HTMLElement).getBoundingClientRect().top + window.scrollY - 72 + computedPaddingTop;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      }, 150);
+      return;
+    }
+
+    if (href === '#inicio') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    const el = document.querySelector(href);
+    if (el) {
+      const computedPaddingTop = parseFloat(window.getComputedStyle(el).paddingTop) || 0;
+      const top = (el as HTMLElement).getBoundingClientRect().top + window.scrollY - 72 + computedPaddingTop;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  };
+
   return (
     <motion.footer
       className="footer"
@@ -42,7 +79,7 @@ export default function Footer() {
 
           <nav className="footer-links" aria-label="Links del footer">
             {links.map(({ href, label }) => (
-              <a key={href} href={href}>
+              <a key={href} href={href} onClick={(e) => handleNavClick(e, href)}>
                 {label}
               </a>
             ))}

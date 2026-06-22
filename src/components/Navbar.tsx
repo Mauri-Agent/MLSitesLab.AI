@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Navbar = () => {
+interface NavbarProps {
+  currentPath?: string;
+  navigate?: (path: string) => void;
+}
+
+const Navbar = ({ currentPath = '/', navigate }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -32,6 +37,25 @@ const Navbar = () => {
 
   const handleNavClick = (href: string) => {
     setMenuOpen(false);
+    
+    // Cross-page navigation scroll handler
+    if (currentPath !== '/' && navigate) {
+      navigate('/');
+      setTimeout(() => {
+        if (href === '#inicio') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+        const el = document.querySelector(href);
+        if (el) {
+          const computedPaddingTop = parseFloat(window.getComputedStyle(el).paddingTop) || 0;
+          const top = (el as HTMLElement).getBoundingClientRect().top + window.scrollY - 72 + computedPaddingTop;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      }, 150);
+      return;
+    }
+
     if (href === '#inicio') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
