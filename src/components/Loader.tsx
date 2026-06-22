@@ -11,65 +11,95 @@ const NODE_COLOR  = new THREE.Color('#39ff14');
 const GLOW_COLOR  = new THREE.Color('#39ff14');
 const LINE_COLOR  = '#0fcb54';
 const BG_COLOR    = '#050908';
-const TOTAL_NODES = 50;        // more nodes for depth
+const TOTAL_NODES = 100;        // increased node count for detailed brain shape
 const DURATION_MS = 3600;      // total loader time (2800ms build + 800ms fade)
 const BUILD_MS    = 2800;      // 2.8 seconds de animación de construcción
 
-// ─── Hex + depth node generator ──────────────────────────────────────────────
-function generateHexNetwork(count: number) {
-  const positions: THREE.Vector3[] = [];
-
-  // Hexagonal rings with real 3D depth variation
-  const rings = [
-    { radius: 0,    n: 1,  zSpread: 0.2  },  // center
-    { radius: 0.5,  n: 5,  zSpread: 0.5  },  // near inner
-    { radius: 1.1,  n: 6,  zSpread: 0.8  },  // inner hex
-    { radius: 1.7,  n: 8,  zSpread: 1.2  },  // mid hex
-    { radius: 2.3,  n: 10, zSpread: 1.6  },  // outer hex
-    { radius: 2.9,  n: 8,  zSpread: 1.0  },  // far outer
-    { radius: 1.4,  n: 6,  zSpread: 2.2  },  // deep back layer
-    { radius: 0.8,  n: 6,  zSpread: 2.5  },  // very deep
-  ];
-
-  rings.forEach(({ radius, n, zSpread }) => {
-    for (let i = 0; i < n && positions.length < count; i++) {
-      const angle = (i / n) * Math.PI * 2 + Math.PI / 6;
-      const jitter = radius * 0.22;
-      const r = radius + (Math.random() - 0.5) * jitter;
-      const a = angle + (Math.random() - 0.5) * 0.3;
-      const z = (Math.random() - 0.5) * zSpread;
-      positions.push(new THREE.Vector3(r * Math.cos(a), r * Math.sin(a), z));
+// Helper to create organic brain node positions representing two hemispheres
+function createBrainNodePoint(S: number) {
+  const theta = Math.random() * Math.PI;
+  const phi = Math.random() * Math.PI * 2;
+  
+  const isInternal = Math.random() < 0.35; // 35% internal nodes for 3D volume depth
+  const depthScale = isInternal ? (0.35 + Math.random() * 0.5) : 1.0;
+  
+  // Add brain folds (gyri/sulci) using trigonometric ripples on the surface nodes
+  const ripple = isInternal 
+    ? 0 
+    : 0.12 * Math.sin(theta * 9.0) * Math.sin(phi * 9.0) * Math.cos(theta * phi * 0.5);
+    
+  const r = 1.0 + ripple;
+  
+  // Base dimensions of a hemisphere: X=width, Y=height, Z=length
+  // Brain is elongated front-to-back (Z), tall (Y), and split in width (X)
+  const rx = 0.70 * r * depthScale;
+  const ry = 0.85 * r * depthScale;
+  const rz = 1.30 * r * depthScale;
+  
+  // Hemisphere center offset along X (longitudinal fissure gap)
+  const xOffset = S * 0.22;
+  const x = xOffset + rx * Math.sin(theta) * Math.cos(phi);
+  const y = ry * Math.cos(theta);
+  const z = rz * Math.sin(theta) * Math.sin(phi);
+  
+  // Refine the shape: frontal lobe (Z > 0) is slightly narrower, occipital lobe (Z < 0) is wider
+  let finalX = x;
+  let finalY = y;
+  if (z > 0) {
+    finalX *= (1.0 - z * 0.14);
+  } else {
+    // Occipital lobe / cerebellum area (slight drop on bottom back)
+    if (y < 0) {
+      finalY *= 1.1;
     }
-  });
-
-  // Fill remaining randomly inside hex bounds
-  while (positions.length < count) {
-    const angle = Math.random() * Math.PI * 2;
-    const r = Math.random() * 2.8;
-    const z = (Math.random() - 0.5) * 2.8; // strong depth
-    positions.push(new THREE.Vector3(
-      r * Math.cos(angle),
-      r * Math.sin(angle),
-      z
-    ));
   }
+  
+  return new THREE.Vector3(finalX, finalY, z);
+}
 
-  // Proximity-based edges (organic, not layer-strict)
+// ─── Brain-shaped node generator ──────────────────────────────────────────────
+function generateBrainNetwork(count: number) {
+  const positions: THREE.Vector3[] = [];
+  
+  // Divide nodes: 44% Left Hemisphere, 44% Right Hemisphere, 12% Corpus Callosum (connecting bridge)
+  const leftCount = Math.floor(count * 0.44);
+  const rightCount = Math.floor(count * 0.44);
+  const bridgeCount = count - (leftCount + rightCount);
+  
+  // Generate Left Hemisphere (S = -1)
+  for (let i = 0; i < leftCount; i++) {
+    positions.push(createBrainNodePoint(-1));
+  }
+  
+  // Generate Right Hemisphere (S = 1)
+  for (let i = 0; i < rightCount; i++) {
+    positions.push(createBrainNodePoint(1));
+  }
+  
+  // Generate Corpus Callosum bridge nodes (middle connection area)
+  for (let i = 0; i < bridgeCount; i++) {
+    const x = (Math.random() - 0.5) * 0.12;
+    const y = (Math.random() - 0.5) * 0.35 - 0.05;
+    const z = (Math.random() - 0.5) * 0.85;
+    positions.push(new THREE.Vector3(x, y, z));
+  }
+  
+  // Proximity-based connections (organic neural network lines)
   const edges: [number, number][] = [];
-  const MAX_DIST = 1.6;
-  const MAX_PER  = 5;
-  const cnt      = new Array(positions.length).fill(0);
-
+  const MAX_DIST = 1.05; // Maximum distance to draw a line
+  const MAX_PER = 4;     // Maximum connections per node to keep it clean
+  const cnt = new Array(positions.length).fill(0);
+  
   for (let a = 0; a < positions.length; a++) {
     const neighbors = positions
-      .map((p, i) => ({ i, d: positions[a].distanceTo(p) }))
-      .filter(({ i, d }) => i !== a && d < MAX_DIST)
+      .map((p, idx) => ({ idx, d: positions[a].distanceTo(p) }))
+      .filter(({ idx, d }) => idx !== a && d < MAX_DIST)
       .sort((x, y) => x.d - y.d)
       .slice(0, MAX_PER);
-
-    for (const { i: b } of neighbors) {
+      
+    for (const { idx: b } of neighbors) {
       if (cnt[a] >= MAX_PER || cnt[b] >= MAX_PER) continue;
-      const dup = edges.some(([ea, eb]) =>
+      const dup = edges.some(([ea, eb]) => 
         (ea === a && eb === b) || (ea === b && eb === a)
       );
       if (!dup) {
@@ -79,7 +109,7 @@ function generateHexNetwork(count: number) {
       }
     }
   }
-
+  
   return { positions, edges };
 }
 
@@ -114,7 +144,7 @@ function NeuralNode({
 
   return (
     <mesh ref={meshRef} position={position}>
-      <sphereGeometry args={[0.065, 14, 14]} />
+      <sphereGeometry args={[0.045, 14, 14]} />
       <meshStandardMaterial
         color={NODE_COLOR}
         emissive={GLOW_COLOR}
@@ -160,7 +190,7 @@ function NetworkLines({
 
   return (
     <lineSegments geometry={geometry}>
-      <lineBasicMaterial color={LINE_COLOR} transparent opacity={0.60} />
+      <lineBasicMaterial color={LINE_COLOR} transparent opacity={0.45} />
     </lineSegments>
   );
 }
@@ -169,7 +199,7 @@ function NetworkLines({
 function NeuralScene({ buildProgress }: { buildProgress: number }) {
   const groupRef = useRef<THREE.Group>(null!);
 
-  const { positions, edges } = useMemo(() => generateHexNetwork(TOTAL_NODES), []);
+  const { positions, edges } = useMemo(() => generateBrainNetwork(TOTAL_NODES), []);
 
   // Phase 1 (0 → 0.4): nodes appear
   // Phase 2 (0.4 → 1): lines are traced
