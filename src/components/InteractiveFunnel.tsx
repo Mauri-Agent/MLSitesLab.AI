@@ -101,7 +101,7 @@ const InteractiveFunnel = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
+          model: 'gpt-5.4-mini',
           messages: history.map(m => ({ role: m.role, content: m.content })),
           temperature: 0.7,
           max_tokens: 300,

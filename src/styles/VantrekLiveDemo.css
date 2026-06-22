@@ -1,0 +1,730 @@
+/* ============================================================
+   VANTREK LIVE INTERACTIVE DEMO STYLES
+   ============================================================ */
+
+.vantrek-live-demo {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-section, #0a0a0a);
+  border: 1px solid var(--border, #222);
+  border-radius: var(--radius-xl, 24px);
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(15, 203, 84, 0.02);
+  width: 100%;
+  margin-bottom: 3rem;
+}
+
+/* Demo Header Info */
+.demo-header-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--border, #222);
+}
+
+.status-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display, inherit);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text-primary, #fff);
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0fcb54;
+  box-shadow: 0 0 10px #0fcb54;
+  animation: live-pulse 2s infinite ease-in-out;
+}
+
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.reset-demo-btn {
+  background: transparent;
+  border: 1px solid var(--border, #222);
+  color: var(--text-secondary, #aaa);
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-md, 8px);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.reset-demo-btn:hover {
+  border-color: #ff5f56;
+  color: #ff5f56;
+  background: rgba(255, 95, 86, 0.05);
+}
+
+/* Panel Layout */
+.demo-panels {
+  display: flex;
+  min-height: 600px;
+}
+
+/* ────────────────────────────────────────────────────────────
+   MERCADO LIBRE CHAT PANEL (LEFT)
+   ──────────────────────────────────────────────────────────── */
+.ml-panel {
+  flex: 1.2;
+  border-right: 1px solid var(--border, #222);
+  display: flex;
+  flex-direction: column;
+  background: #080d0a;
+}
+
+.ml-panel-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: #FFE600;
+  color: #000;
+  gap: 1rem;
+}
+
+.ml-logo-badge {
+  font-weight: 900;
+  font-size: 1rem;
+  letter-spacing: 1.5px;
+  background: #000;
+  color: #FFE600;
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.ml-order-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.order-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.order-buyer {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.order-status-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+}
+
+.ml-product-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.2rem;
+  background: rgba(255, 230, 0, 0.05);
+  border-bottom: 1px solid rgba(255, 230, 0, 0.1);
+  font-size: 0.75rem;
+  color: #FFE600;
+}
+
+.product-info-icon {
+  display: flex;
+  align-items: center;
+}
+
+.ml-chat-area {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  max-height: 400px;
+  min-height: 350px;
+}
+
+.ml-chat-bubble-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.ml-chat-bubble-wrapper.user-align {
+  justify-content: flex-end;
+}
+
+.ml-chat-bubble-wrapper.bot-align {
+  justify-content: flex-start;
+}
+
+.ml-chat-bubble {
+  max-width: 75%;
+  padding: 0.85rem 1.1rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.ml-chat-bubble.user-style {
+  background: #1c3d27;
+  color: #fff;
+  border: 1px solid rgba(15, 203, 84, 0.2);
+  border-bottom-right-radius: 2px;
+}
+
+.ml-chat-bubble.bot-style {
+  background: #181d1a;
+  color: #e2e8f0;
+  border: 1px solid rgba(255,255,255,0.04);
+  border-bottom-left-radius: 2px;
+}
+
+.operator-msg {
+  display: flex;
+  flex-direction: column;
+}
+
+.operator-tag {
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: #0fcb54;
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bubble-time-stamp {
+  display: block;
+  font-size: 0.62rem;
+  color: var(--text-muted, #666);
+  text-align: right;
+  margin-top: 0.4rem;
+}
+
+/* Typing bubble */
+.typing-bubble {
+  padding: 0.75rem 1rem !important;
+}
+
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.typing-indicator span {
+  width: 6px;
+  height: 6px;
+  background: #0fcb54;
+  border-radius: 50%;
+  display: inline-block;
+  animation: typing-bounce 1.4s infinite ease-in-out both;
+}
+
+.typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+.typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typing-bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1.0); }
+}
+
+/* Suggestions list */
+.ml-quick-suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.8rem 1.2rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(255,255,255,0.03);
+}
+
+.quick-label {
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: var(--text-muted, #666);
+}
+
+.suggestions-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sug-btn {
+  background: rgba(255, 230, 0, 0.03);
+  border: 1px solid rgba(255, 230, 0, 0.2);
+  color: #FFE600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sug-btn:hover:not(:disabled) {
+  background: #FFE600;
+  color: #000;
+}
+
+.sug-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Chat Input form */
+.ml-input-area {
+  display: flex;
+  padding: 1rem 1.2rem;
+  background: #060907;
+  border-top: 1px solid var(--border, #222);
+  gap: 0.75rem;
+}
+
+.ml-input-area input {
+  flex: 1;
+  background: #111;
+  border: 1px solid var(--border, #222);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: #fff;
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.ml-input-area input:focus {
+  border-color: #FFE600;
+}
+
+.ml-input-area .send-btn {
+  background: #FFE600;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ml-input-area .send-btn:hover:not(:disabled) {
+  background: #fff;
+}
+
+.ml-input-area .send-btn:disabled {
+  opacity: 0.5;
+  background: rgba(255, 230, 0, 0.2);
+  color: rgba(0, 0, 0, 0.4);
+  cursor: not-allowed;
+}
+
+/* ────────────────────────────────────────────────────────────
+   TELEGRAM PHONE PANEL (RIGHT)
+   ──────────────────────────────────────────────────────────── */
+.tg-phone-panel {
+  flex: 0.8;
+  padding: 1.5rem;
+  background: #070707;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+/* Phone Bezel Mockup */
+.phone-frame {
+  width: 290px;
+  height: 520px;
+  background: #17212b;
+  border: 10px solid #333;
+  border-radius: 36px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Phone Notch */
+.phone-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  height: 18px;
+  background: #333;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  z-index: 20;
+}
+
+/* Phone Status Bar */
+.phone-status-bar {
+  height: 24px;
+  background: #2481cc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.2rem;
+  font-size: 0.65rem;
+  color: #fff;
+  padding-top: 4px;
+  z-index: 10;
+}
+
+/* Telegram Header */
+.tg-app-header {
+  background: #2481cc;
+  color: #fff;
+  padding: 0.5rem 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
+.tg-back {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.tg-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.tg-bot-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.tg-bot-status {
+  font-size: 0.62rem;
+  opacity: 0.8;
+}
+
+.tg-menu {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* Telegram App Body */
+.tg-app-body {
+  flex: 1;
+  background: #0e1621;
+  padding: 0.85rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 1rem;
+}
+
+.tg-chat-date {
+  align-self: center;
+  background: rgba(14, 22, 33, 0.6);
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.6rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+}
+
+.tg-system-msg {
+  align-self: center;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.6rem;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.tg-empty-state {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: rgba(255,255,255,0.2);
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.clock-icon {
+  stroke-width: 1.5;
+}
+
+.tg-empty-state p {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.tg-empty-state span {
+  font-size: 0.65rem;
+  line-height: 1.4;
+}
+
+/* Telegram Alert Notification Bubble */
+.tg-alert-bubble {
+  background: #182533;
+  border: 1px solid rgba(255, 230, 0, 0.05);
+  border-radius: 10px;
+  padding: 0.8rem;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  animation: slide-up-alert 0.3s ease;
+}
+
+@keyframes slide-up-alert {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tg-alert-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: bold;
+  color: #f5a623;
+}
+
+.tg-alert-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  background: rgba(0, 0, 0, 0.15);
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+.alert-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.alert-item .label {
+  color: #2481cc;
+  font-weight: 700;
+  font-size: 0.62rem;
+}
+
+.alert-item .value {
+  color: #e2e8f0;
+}
+
+.alert-item .value.bot-suggested {
+  color: #0fcb54;
+}
+
+.tg-alert-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.2rem;
+}
+
+.approve-action-btn,
+.reject-action-btn {
+  flex: 1;
+  border: none;
+  padding: 0.4rem;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.approve-action-btn {
+  background: #0fcb54;
+  color: #000;
+}
+
+.reject-action-btn {
+  background: #ff5f56;
+  color: #fff;
+}
+
+.approve-action-btn:hover,
+.reject-action-btn:hover {
+  opacity: 0.9;
+}
+
+.tg-action-result {
+  text-align: center;
+  padding: 0.2rem;
+}
+
+.result-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+}
+
+.result-badge.approved-badge {
+  background: rgba(15, 203, 84, 0.1);
+  color: #0fcb54;
+  border: 1px solid rgba(15, 203, 84, 0.2);
+}
+
+.result-badge.rejected-badge {
+  background: rgba(255, 95, 86, 0.1);
+  color: #ff5f56;
+  border: 1px solid rgba(255, 95, 86, 0.2);
+}
+
+.tg-time {
+  font-size: 0.55rem;
+  color: rgba(255,255,255,0.3);
+  text-align: right;
+  margin-top: auto;
+}
+
+.phone-home-bar {
+  height: 4px;
+  width: 100px;
+  background: #333;
+  margin: 8px auto;
+  border-radius: 10px;
+  z-index: 10;
+}
+
+/* Phone vibration animation */
+.vibrate-anim {
+  animation: shake-phone 0.5s ease-in-out;
+}
+
+@keyframes shake-phone {
+  0%, 100% { transform: rotate(0deg); }
+  10%, 30%, 50%, 70%, 90% { transform: translate(-3px, 1px) rotate(-1deg); }
+  20%, 40%, 60%, 80% { transform: translate(3px, -1px) rotate(1deg); }
+}
+
+/* Simulated Sheets DB status panel */
+.simulated-db-status {
+  width: 100%;
+  background: #0a0e0b;
+  border: 1px solid rgba(15, 203, 84, 0.08);
+  border-radius: 8px;
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.db-title {
+  font-size: 0.72rem;
+  font-weight: bold;
+  color: #0fcb54;
+  letter-spacing: 0.5px;
+}
+
+.db-logs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-height: 80px;
+  overflow-y: auto;
+  font-size: 0.65rem;
+}
+
+.db-log-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  padding-bottom: 0.2rem;
+}
+
+.log-time {
+  color: #555;
+  width: 50px;
+}
+
+.log-action {
+  color: #aaa;
+  flex: 1;
+  padding-left: 0.4rem;
+}
+
+.log-status {
+  font-weight: bold;
+}
+
+.log-status.aprobado, .log-status.completado {
+  color: #0fcb54;
+}
+
+.log-status.pendiente {
+  color: #f5a623;
+}
+
+.log-status.rechazado {
+  color: #ff5f56;
+}
+
+/* ────────────────────────────────────────────────────────────
+   RESPONSIVE DESIGN (TABLET & MOBILE)
+   ──────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .demo-panels {
+    flex-direction: column;
+  }
+  
+  .ml-panel {
+    border-right: none;
+    border-bottom: 1px solid var(--border, #222);
+  }
+  
+  .tg-phone-panel {
+    padding: 2rem 1.5rem;
+  }
+  
+  .phone-frame {
+    width: 320px;
+    height: 560px;
+  }
+}
+
+/* ── Case Study Cards Grid Layout ── */
+.case-study-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (max-width: 1024px) {
+  .case-study-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+}
