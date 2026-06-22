@@ -1,9 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { 
-  Send, 
   AlertTriangle, 
-  Clock, 
-  Info
+  Clock
 } from 'lucide-react';
 import '../styles/VantrekLiveDemo.css';
 
@@ -318,101 +316,171 @@ export default function VantrekLiveDemo() {
       </div>
 
       <div className="demo-panels">
-        {/* LEFT PANEL: Mercado Libre Chat Mockup */}
+        {/* LEFT PANEL: Mercado Libre Mockup Dashboard Portal */}
         <div className="ml-panel">
-          <div className="ml-panel-header">
-            <div className="ml-logo-badge">VANTREK</div>
-            <div className="ml-order-details">
-              <span className="order-title">Detalle de Compra #${ORDER_ID}</span>
-              <span className="order-buyer">Comprador: Mateo Silva</span>
+          {/* Yellow Navigation Header */}
+          <div className="ml-top-nav">
+            <div className="ml-top-nav-content">
+              {/* Left Logo */}
+              <div className="ml-nav-logo">
+                <span className="logo-icon">🤝</span>
+                <span className="logo-text">vantrek</span>
+              </div>
+              {/* Center Search Bar */}
+              <div className="ml-nav-search">
+                <input type="text" placeholder="Buscar productos, marcas y más..." disabled />
+                <button className="search-btn" disabled>🔍</button>
+              </div>
+              {/* Right Nav Items */}
+              <div className="ml-nav-menu">
+                <span className="nav-user">👤 Mauricio</span>
+                <span className="nav-item">Mis compras</span>
+                <span className="nav-item">Favoritos</span>
+                <span className="nav-icon">🔔</span>
+                <span className="nav-icon">🛒</span>
+              </div>
             </div>
-            <div className="order-status-badge">Pago Aprobado</div>
           </div>
 
-          <div className="ml-product-strip">
-            <div className="product-info-icon">
-              <Info size={16} />
-            </div>
-            <div className="product-strip-text">
-              <strong>Articulo:</strong> {PRODUCT_NAME} | <strong>Precio:</strong> {PRODUCT_PRICE}
-            </div>
+          {/* Breadcrumbs */}
+          <div className="ml-breadcrumbs">
+            <span>Compras</span>
+            <span className="divider">&gt;</span>
+            <span>Detalle de la compra</span>
+            <span className="divider">&gt;</span>
+            <span className="active">Mensajes de la compra</span>
           </div>
 
-          <div className="ml-chat-area" ref={chatAreaRef}>
-            {messages.filter(m => !m.isSystemPrompt).map((msg) => (
-              <div 
-                key={msg.id} 
-                className={`ml-chat-bubble-wrapper ${msg.role === 'user' ? 'user-align' : 'bot-align'}`}
-              >
-                <div className={`ml-chat-bubble ${msg.role === 'user' ? 'user-style' : 'bot-style'}`}>
-                  {/* Parse markdown-like syntax for the simulated operator */}
-                  {msg.content.includes('*[Operador') ? (
-                    <div className="operator-msg">
-                      <span className="operator-tag">🧑‍💻 Operador Vantrek</span>
-                      <p>{msg.content.replace(/\*\[Operador de Vantrek\]:\*/g, '').trim()}</p>
+          {/* Dashboard Body */}
+          <div className="ml-dashboard-body">
+            {/* Chat Container */}
+            <div className="ml-chat-container">
+              {/* Chat Header */}
+              <div className="ml-chat-header">
+                <div className="seller-avatar">V</div>
+                <span className="seller-name">VANTREK</span>
+              </div>
+
+              {/* Chat Area (Scrollable messages) */}
+              <div className="ml-chat-area" ref={chatAreaRef}>
+                {/* Date Marker */}
+                <div className="chat-date-marker">Hoy</div>
+
+                {messages.filter(m => !m.isSystemPrompt).map((msg) => (
+                  <div 
+                    key={msg.id} 
+                    className={`ml-chat-bubble-wrapper ${msg.role === 'user' ? 'user-align' : 'bot-align'}`}
+                  >
+                    {msg.role !== 'user' && (
+                      <div className="seller-msg-avatar">V</div>
+                    )}
+                    
+                    <div className={`ml-chat-bubble ${msg.role === 'user' ? 'user-style' : 'bot-style'}`}>
+                      {/* Parse markdown-like syntax for the simulated operator */}
+                      {msg.content.includes('*[Operador') ? (
+                        <div className="operator-msg">
+                          <span className="operator-tag">🧑‍💻 Operador Vantrek</span>
+                          <p>{msg.content.replace(/\*\[Operador de Vantrek\]:\*/g, '').trim()}</p>
+                        </div>
+                      ) : (
+                        <div className="text-content">
+                          {msg.content.split('\n').map((line, idx) => (
+                            <p key={idx}>{line}</p>
+                          ))}
+                        </div>
+                      )}
+                      <span className="bubble-time-stamp">
+                        {msg.role === 'user' ? 'Enviado' : 'Asistente'}
+                      </span>
                     </div>
-                  ) : (
-                    <div className="text-content">
-                      {msg.content.split('\n').map((line, idx) => (
-                        <p key={idx}>{line}</p>
-                      ))}
+
+                    {msg.role === 'user' && (
+                      <span className="msg-checkmarks">✓✓</span>
+                    )}
+                  </div>
+                ))}
+
+                {isTyping && (
+                  <div className="ml-chat-bubble-wrapper bot-align">
+                    <div className="seller-msg-avatar">V</div>
+                    <div className="ml-chat-bubble bot-style typing-bubble">
+                      <div className="typing-indicator">
+                        <span />
+                        <span />
+                        <span />
+                      </div>
                     </div>
-                  )}
-                  <span className="bubble-time-stamp">
-                    {msg.role === 'user' ? 'Enviado' : 'Asistente'}
-                  </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Quick suggestions section styled like ML Atajos */}
+              <div className="ml-quick-suggestions">
+                <span className="quick-label">¿Buscas ayuda? Te acercamos estos atajos</span>
+                <div className="suggestions-list">
+                  {SUGGESTIONS.map((sug, idx) => (
+                    <button 
+                      key={idx} 
+                      className="sug-btn" 
+                      onClick={() => handleSendMessage(sug)}
+                      disabled={isTyping}
+                    >
+                      {sug}
+                    </button>
+                  ))}
                 </div>
               </div>
-            ))}
 
-            {isTyping && (
-              <div className="ml-chat-bubble-wrapper bot-align">
-                <div className="ml-chat-bubble bot-style typing-bubble">
-                  <div className="typing-indicator">
-                    <span />
-                    <span />
-                    <span />
+              {/* Text input form */}
+              <form 
+                className="ml-input-area" 
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSendMessage(inputText);
+                }}
+              >
+                <input
+                  ref={inputRef}
+                  type="text"
+                  placeholder="Escribe un mensaje de prueba al asistente de Vantrek..."
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
+                  disabled={isTyping}
+                />
+                <button type="submit" className="send-btn" disabled={!inputText.trim() || isTyping}>
+                  Enviar
+                </button>
+              </form>
+            </div>
+
+            {/* Sidebar (Product Info Card) */}
+            <div className="ml-product-sidebar">
+              <div className="sidebar-order-header">
+                <span className="sidebar-order-num">Compra #{ORDER_ID}</span>
+                <span className="sidebar-order-date">12 de junio 08:37</span>
+              </div>
+              
+              <div className="sidebar-delivery-status">
+                <span className="status-title">Entrega pendiente</span>
+                <span className="status-desc">Ya puedes retirar tu compra en el domicilio del vendedor</span>
+              </div>
+              
+              <div className="sidebar-product-box">
+                <span className="product-box-title">Productos de la compra</span>
+                <div className="product-box-content">
+                  <img src="/reflector.png" alt={PRODUCT_NAME} className="product-img" />
+                  <div className="product-box-details">
+                    <span className="product-box-name">{PRODUCT_NAME}</span>
+                    <span className="product-box-price">{PRODUCT_PRICE} | 1 unidad</span>
                   </div>
                 </div>
               </div>
-            )}
-          </div>
-
-          <div className="ml-quick-suggestions">
-            <span className="quick-label">Sugerencias:</span>
-            <div className="suggestions-list">
-              {SUGGESTIONS.map((sug, idx) => (
-                <button 
-                  key={idx} 
-                  className="sug-btn" 
-                  onClick={() => handleSendMessage(sug)}
-                  disabled={isTyping}
-                >
-                  {sug}
-                </button>
-              ))}
+              
+              <button className="sidebar-block-messages" disabled>
+                Bloquear mensajes
+              </button>
             </div>
           </div>
-
-          <form 
-            className="ml-input-area" 
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSendMessage(inputText);
-            }}
-          >
-            <input
-              ref={inputRef}
-              type="text"
-              placeholder="Escribe un mensaje de prueba al asistente de Vantrek..."
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-              disabled={isTyping}
-            />
-            <button type="submit" className="send-btn" disabled={!inputText.trim() || isTyping}>
-              <Send size={16} />
-            </button>
-          </form>
         </div>
 
         {/* RIGHT PANEL: Telegram Mobile Mockup */}
