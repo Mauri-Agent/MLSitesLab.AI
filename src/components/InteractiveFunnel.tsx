@@ -104,7 +104,7 @@ const InteractiveFunnel = () => {
           model: 'gpt-5.4-mini',
           messages: history.map(m => ({ role: m.role, content: m.content })),
           temperature: 0.7,
-          max_tokens: 300,
+          max_completion_tokens: 300,
         }),
         signal: controller.signal,
       });
