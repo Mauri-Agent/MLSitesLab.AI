@@ -200,7 +200,7 @@ export default function VantrekSimulator() {
             {currentStep >= 3 && (
               <div className="log-line">
                 {step3RowAdded 
-                  ? '> SHEETS: Fila Nacho Pisano insertada con éxito.' 
+                  ? '> SHEETS: Fila Mateo Silva insertada con éxito.' 
                   : '> SHEETS: Conectando con Google Sheets API...'}
               </div>
             )}
@@ -247,7 +247,7 @@ export default function VantrekSimulator() {
                   <div className="ml-header">
                     <div className="ml-avatar">NP</div>
                     <div className="ml-header-info">
-                      <span className="ml-username">Nacho Pisano</span>
+                      <span className="ml-username">Mateo Silva</span>
                       <span className="ml-order-id">Detalle de Venta #2000109482</span>
                     </div>
                     <div className="ml-badge-status">Pago Aprobado</div>
@@ -445,7 +445,7 @@ export default function VantrekSimulator() {
                                 className={`sheets-row row-added ${sheetsRowState.toLowerCase()}`}
                               >
                                 <td className="font-mono">19-06 12:01</td>
-                                <td className="font-bold text-primary">Nacho Pisano</td>
+                                <td className="font-bold text-primary">Mateo Silva</td>
                                 <td>Soporte Premium Vantrek</td>
                                 <td className="text-secondary highlight-cell">Calle Falsa 123, CABA</td>
                                 <td>Factura A (Pendiente CUIT)</td>
@@ -487,7 +487,7 @@ export default function VantrekSimulator() {
                     <div className="sheets-footer-action">
                       <div className="sheets-status-desc text-secondary">
                         {step3RowAdded 
-                          ? '✓ Fila de Nacho Pisano insertada automáticamente.' 
+                          ? '✓ Fila de Mateo Silva insertada automáticamente.' 
                           : 'Procesando inserción de datos en Sheets...'}
                       </div>
                       <button className="btn-next-step" onClick={handleNext} disabled={!step3RowAdded}>
@@ -525,7 +525,7 @@ export default function VantrekSimulator() {
                         </div>
                         
                         <div className="tg-alert-content">
-                          <p><strong>Comprador:</strong> Nacho Pisano</p>
+                          <p><strong>Comprador:</strong> Mateo Silva</p>
                           <p><strong>Solicitud:</strong> Cambio de dirección de envío solicitado post-venta.</p>
                           <p><strong>Nueva Dirección:</strong> Calle Falsa 123, CABA</p>
                           <p><strong>Facturación:</strong> Solicitó Factura A</p>
@@ -582,7 +582,7 @@ export default function VantrekSimulator() {
                             <div className="completion-content">
                               <h4 className="text-primary font-bold">¡Flujo Completado con Éxito!</h4>
                               <p className="text-secondary text-sm">
-                                Se notificó automáticamente a Nacho Pisano en Mercado Libre, la planilla de Google Sheets actualizó el estado a <strong>Aprobado</strong> y se disparó el pedido de CUIT para Factura A.
+                                Se notificó automáticamente a Mateo Silva en Mercado Libre, la planilla de Google Sheets actualizó el estado a <strong>Aprobado</strong> y se disparó el pedido de CUIT para Factura A.
                               </p>
                             </div>
                           </>

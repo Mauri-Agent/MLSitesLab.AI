@@ -78,7 +78,7 @@ REGLAS CRÍTICAS DE SEGURIDAD Y POLÍTICAS (SI ROMPES ALGUNA, CERRARÁN NUESTRA 
 5. No ofrezcas compensaciones económicas, reembolsos automáticos ni descuentos. Para reclamos o problemas de artículos defectuosos o diferentes, el bot debe notificar al equipo humano para revisarlo.
 
 CONTEXTO DE ESTA CONVERSACIÓN:
-- Esta es una simulación interactiva en la página web de MLSitesLab.AI. El comprador "Nacho Pisano" es un visitante de la web probando la inteligencia del sistema. Responde de forma muy natural y realista.
+- Esta es una simulación interactiva en la página web de MLSitesLab.AI. El comprador "Mateo Silva" es un visitante de la web probando la inteligencia del sistema. Responde de forma muy natural y realista.
 - ¿DEBES INCLUIR SALUDO INICIAL EN ESTA RESPUESTA? Si es la primera interacción, sí. En las respuestas siguientes, no.`;
 
 const GREETING = `¡Hola! 👋 Soy el asistente de IA de Vantrek y atiendo el servicio de post-venta de Mercado Libre las 24 horas, los 7 días de la semana.
@@ -114,12 +114,23 @@ export default function VantrekLiveDemo() {
   // Telegram Alerts State
   const [tgAlerts, setTgAlerts] = useState<TelegramAlert[]>([]);
 
-  const chatEndRef = useRef<HTMLDivElement>(null);
+  const chatAreaRef = useRef<HTMLDivElement>(null);
   const phoneBodyRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  // Auto scroll to bottom
+  // Auto scroll to bottom of chat area without page viewport jumping
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const chatArea = chatAreaRef.current;
+    if (chatArea) {
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }
+  }, [messages, isTyping]);
+
+  // Focus the text input whenever typing ends or messages change
+  useEffect(() => {
+    if (!isTyping) {
+      inputRef.current?.focus();
+    }
   }, [messages, isTyping]);
 
   useEffect(() => {
@@ -250,7 +261,7 @@ export default function VantrekLiveDemo() {
         { 
           id: generateId(), 
           role: 'assistant', 
-          content: '🧑‍💻 *[Operador de Vantrek]:* Hola Nacho, ya revisamos tu solicitud. Aprobamos el cambio. Nos comunicaremos contigo si necesitamos algún detalle adicional. ¡Muchas gracias!' 
+          content: '🧑‍💻 *[Operador de Vantrek]:* Hola Mateo, ya revisamos tu solicitud. Aprobamos el cambio. Nos comunicaremos contigo si necesitamos algún detalle adicional. ¡Muchas gracias!' 
         }
       ]);
 
@@ -273,7 +284,7 @@ export default function VantrekLiveDemo() {
         { 
           id: generateId(), 
           role: 'assistant', 
-          content: '🧑‍💻 *[Operador de Vantrek]:* Hola Nacho. Lamentablemente no podemos procesar tu última solicitud en este momento por políticas de envío de Mercado Libre. Por favor dinos si podemos ayudarte con algo más.' 
+          content: '🧑‍💻 *[Operador de Vantrek]:* Hola Mateo. Lamentablemente no podemos procesar tu última solicitud en este momento por políticas de envío de Mercado Libre. Por favor dinos si podemos ayudarte con algo más.' 
         }
       ]);
 
@@ -299,7 +310,7 @@ export default function VantrekLiveDemo() {
       <div className="demo-header-info">
         <div className="status-label">
           <span className="live-dot" />
-          <span>SIMULACIÓN CON IA REAL (GPT-5.4-MINI)</span>
+          <span>SIMULACIÓN CON IA REAL DEL ASISTENTE DE VANTREK</span>
         </div>
         <button className="reset-demo-btn" onClick={handleClearChat}>
           Reiniciar Demo
@@ -313,7 +324,7 @@ export default function VantrekLiveDemo() {
             <div className="ml-logo-badge">VANTREK</div>
             <div className="ml-order-details">
               <span className="order-title">Detalle de Compra #${ORDER_ID}</span>
-              <span className="order-buyer">Comprador: Nacho Pisano</span>
+              <span className="order-buyer">Comprador: Mateo Silva</span>
             </div>
             <div className="order-status-badge">Pago Aprobado</div>
           </div>
@@ -327,7 +338,7 @@ export default function VantrekLiveDemo() {
             </div>
           </div>
 
-          <div className="ml-chat-area">
+          <div className="ml-chat-area" ref={chatAreaRef}>
             {messages.filter(m => !m.isSystemPrompt).map((msg) => (
               <div 
                 key={msg.id} 
@@ -365,7 +376,6 @@ export default function VantrekLiveDemo() {
                 </div>
               </div>
             )}
-            <div ref={chatEndRef} />
           </div>
 
           <div className="ml-quick-suggestions">
@@ -392,6 +402,7 @@ export default function VantrekLiveDemo() {
             }}
           >
             <input
+              ref={inputRef}
               type="text"
               placeholder="Escribe un mensaje de prueba al asistente de Vantrek..."
               value={inputText}
@@ -449,7 +460,7 @@ export default function VantrekLiveDemo() {
                     <div className="tg-alert-content">
                       <div className="alert-item">
                         <span className="label">Comprador:</span>
-                        <span className="value">Nacho Pisano</span>
+                        <span className="value">Mateo Silva</span>
                       </div>
                       <div className="alert-item">
                         <span className="label">Orden:</span>

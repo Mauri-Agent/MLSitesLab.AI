@@ -41,6 +41,18 @@ export default function VantrekCaseStudy({ navigate }: VantrekCaseStudyProps) {
         {/* Live Demo Area (Full Width) */}
         <VantrekLiveDemo />
 
+        {/* Mercado Libre Store Link */}
+        <div className="ml-store-link-container">
+          <a
+            href="https://www.mercadolibre.com.uy/pagina/eunato#origin=search_intervention&tracking_id=d5d05c3b-1faf-4222-acd7-c5806b9472b0"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-store-link"
+          >
+            Esta es la tienda de Vantrek en Mercado Libre (haz click aquí)
+          </a>
+        </div>
+
         {/* Case Study Content Cards (3-Column Grid Below) */}
         <div className="case-study-cards-grid">
           {/* El Problema */}
