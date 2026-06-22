@@ -33,6 +33,15 @@ export default function Portfolio({ navigate }: PortfolioProps) {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
             whileHover={{ y: -8, borderColor: 'rgba(15, 203, 84, 0.4)', boxShadow: '0 10px 30px rgba(15, 203, 84, 0.05)' }}
+            onClick={() => navigate('/portfolio/vantrek')}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                navigate('/portfolio/vantrek');
+              }
+            }}
           >
             <div className="project-card-header">
               <span className="project-badge">AUTOMATIZACIÓN & IA</span>
@@ -62,15 +71,14 @@ export default function Portfolio({ navigate }: PortfolioProps) {
             </div>
             
             <div className="project-card-footer">
-              <button
-                onClick={(e) => { e.preventDefault(); navigate('/portfolio/vantrek'); }}
+              <div
                 className="btn-project-link"
                 id="vantrek-case-link"
                 aria-label="Ver caso de estudio de Vantrek"
               >
                 <span>Ver Caso de Estudio</span>
                 <ArrowRight size={16} />
-              </button>
+              </div>
             </div>
           </motion.div>
         </div>

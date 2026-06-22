@@ -1123,6 +1123,7 @@
   position: relative;
   overflow: hidden;
   transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  cursor: pointer;
 }
 
 .project-card-header {
@@ -1207,7 +1208,9 @@
   transition: color 0.25s var(--ease);
 }
 
-.btn-project-link:hover {
+.btn-project-link:hover,
+.project-card:hover .btn-project-link,
+.project-card:focus-within .btn-project-link {
   color: var(--accent-bright);
 }
 
@@ -1215,7 +1218,9 @@
   transition: transform 0.25s var(--ease);
 }
 
-.btn-project-link:hover svg {
+.btn-project-link:hover svg,
+.project-card:hover .btn-project-link svg,
+.project-card:focus-within .btn-project-link svg {
   transform: translateX(4px);
 }
 
