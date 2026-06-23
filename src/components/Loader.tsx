@@ -257,7 +257,7 @@ function NeuralScene({ buildProgress }: { buildProgress: number }) {
   });
 
   return (
-    <group ref={groupRef}>
+    <group ref={groupRef} scale={[2.4, 2.4, 2.4]}>
       {/* Lines — re-rendered each time a new edge becomes visible */}
       <NetworkLines
         positions={positions}
