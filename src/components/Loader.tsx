@@ -11,47 +11,70 @@ const NODE_COLOR  = new THREE.Color('#39ff14');
 const GLOW_COLOR  = new THREE.Color('#39ff14');
 const LINE_COLOR  = '#0fcb54';
 const BG_COLOR    = '#050908';
-const TOTAL_NODES = 100;        // increased node count for detailed brain shape
+const TOTAL_NODES = 185;        // increased node count for detailed brain shape
 const DURATION_MS = 3600;      // total loader time (2800ms build + 800ms fade)
 const BUILD_MS    = 2800;      // 2.8 seconds de animación de construcción
 
-// Helper to create organic brain node positions representing two hemispheres
-function createBrainNodePoint(S: number) {
+// Helper to create brain stem nodes at the bottom center
+function createBrainStemNode() {
+  const stemY = -0.55 - Math.random() * 0.6; // Y from -0.55 to -1.15
+  const angle = Math.random() * Math.PI * 2;
+  const radius = 0.11 * (1.0 + (stemY + 0.55) * 0.3); // tapers slightly at the bottom
+  const x = radius * Math.cos(angle);
+  const z = radius * Math.sin(angle);
+  return new THREE.Vector3(x, stemY, z);
+}
+
+// Helper to create cerebellum nodes at the bottom back
+function createCerebellumNode(S: number) {
+  const theta = Math.PI * 0.65 + Math.random() * 0.25; // bottom-facing angles
+  const phi = Math.PI * 1.1 + Math.random() * 0.8;    // back-facing angles
+  
+  const r = 0.40 + Math.random() * 0.15;
+  const rx = 0.45 * r;
+  const ry = 0.35 * r;
+  const rz = 0.55 * r;
+  
+  const x = S * (0.16 + rx * Math.sin(theta) * Math.cos(phi));
+  const y = -0.35 + ry * Math.cos(theta); // shifted down
+  const z = -0.40 + rz * Math.sin(theta) * Math.sin(phi); // shifted back
+  
+  return new THREE.Vector3(x, y, z);
+}
+
+// Helper to create main cerebral hemispheres nodes
+function createCerebralHemisphereNode(S: number) {
   const theta = Math.random() * Math.PI;
   const phi = Math.random() * Math.PI * 2;
   
-  const isInternal = Math.random() < 0.35; // 35% internal nodes for 3D volume depth
+  const isInternal = Math.random() < 0.30; // 30% internal nodes for depth
   const depthScale = isInternal ? (0.35 + Math.random() * 0.5) : 1.0;
   
-  // Add brain folds (gyri/sulci) using trigonometric ripples on the surface nodes
+  // High fidelity sulci/gyri ripples to mimic the generated image folds
   const ripple = isInternal 
     ? 0 
-    : 0.12 * Math.sin(theta * 9.0) * Math.sin(phi * 9.0) * Math.cos(theta * phi * 0.5);
-    
+    : 0.11 * Math.sin(theta * 10) * Math.sin(phi * 8) + 
+      0.03 * Math.sin(theta * 22) * Math.cos(phi * 20);
+      
   const r = 1.0 + ripple;
   
-  // Base dimensions of a hemisphere: X=width, Y=height, Z=length
-  // Brain is elongated front-to-back (Z), tall (Y), and split in width (X)
-  const rx = 0.70 * r * depthScale;
+  // Hemisphere dimensions: X=width, Y=height, Z=length
+  const rx = 0.72 * r * depthScale;
   const ry = 0.85 * r * depthScale;
-  const rz = 1.30 * r * depthScale;
+  const rz = 1.20 * r * depthScale;
   
-  // Hemisphere center offset along X (longitudinal fissure gap)
-  const xOffset = S * 0.22;
+  // Longitudinal fissure offset (X gap)
+  const xOffset = S * 0.24;
   const x = xOffset + rx * Math.sin(theta) * Math.cos(phi);
-  const y = ry * Math.cos(theta);
+  const y = 0.1 + ry * Math.cos(theta); // slightly shifted up
   const z = rz * Math.sin(theta) * Math.sin(phi);
   
-  // Refine the shape: frontal lobe (Z > 0) is slightly narrower, occipital lobe (Z < 0) is wider
+  // Shape detailing: frontal lobe (Z > 0) tapers slightly, occipital lobe (Z < 0) is rounded
   let finalX = x;
   let finalY = y;
   if (z > 0) {
-    finalX *= (1.0 - z * 0.14);
-  } else {
-    // Occipital lobe / cerebellum area (slight drop on bottom back)
-    if (y < 0) {
-      finalY *= 1.1;
-    }
+    finalX *= (1.0 - z * 0.16); // frontal tapering
+    finalY *= (1.0 - z * 0.05);
   }
   
   return new THREE.Vector3(finalX, finalY, z);
@@ -61,25 +84,37 @@ function createBrainNodePoint(S: number) {
 function generateBrainNetwork(count: number) {
   const positions: THREE.Vector3[] = [];
   
-  // Divide nodes: 44% Left Hemisphere, 44% Right Hemisphere, 12% Corpus Callosum (connecting bridge)
-  const leftCount = Math.floor(count * 0.44);
-  const rightCount = Math.floor(count * 0.44);
-  const bridgeCount = count - (leftCount + rightCount);
+  // Divide nodes:
+  // - 70% Cerebral hemispheres (left & right)
+  // - 16% Cerebellum lobes (left & right)
+  // - 9% Brain Stem (central bottom column)
+  // - 5% Corpus Callosum (inner bridge)
+  const hemiCount = Math.floor(count * 0.35); // 35% left, 35% right
+  const cereCount = Math.floor(count * 0.08); // 8% left, 8% right
+  const stemCount = Math.floor(count * 0.09);
+  const bridgeCount = count - (hemiCount * 2 + cereCount * 2 + stemCount);
   
-  // Generate Left Hemisphere (S = -1)
-  for (let i = 0; i < leftCount; i++) {
-    positions.push(createBrainNodePoint(-1));
+  // 1. Generate Hemispheres
+  for (let i = 0; i < hemiCount; i++) {
+    positions.push(createCerebralHemisphereNode(-1)); // Left
+    positions.push(createCerebralHemisphereNode(1));  // Right
   }
   
-  // Generate Right Hemisphere (S = 1)
-  for (let i = 0; i < rightCount; i++) {
-    positions.push(createBrainNodePoint(1));
+  // 2. Generate Cerebellum
+  for (let i = 0; i < cereCount; i++) {
+    positions.push(createCerebellumNode(-1)); // Left
+    positions.push(createCerebellumNode(1));  // Right
   }
   
-  // Generate Corpus Callosum bridge nodes (middle connection area)
+  // 3. Generate Brain Stem
+  for (let i = 0; i < stemCount; i++) {
+    positions.push(createBrainStemNode());
+  }
+  
+  // 4. Generate Corpus Callosum bridge nodes (inner middle connection area)
   for (let i = 0; i < bridgeCount; i++) {
     const x = (Math.random() - 0.5) * 0.12;
-    const y = (Math.random() - 0.5) * 0.35 - 0.05;
+    const y = (Math.random() - 0.5) * 0.35 + 0.1;
     const z = (Math.random() - 0.5) * 0.85;
     positions.push(new THREE.Vector3(x, y, z));
   }
@@ -215,10 +250,10 @@ function NeuralScene({ buildProgress }: { buildProgress: number }) {
   // Slow organic rotation, starts only after build begins
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
-    const speed = Math.min(buildProgress * 2.5, 1) * 0.13;
+    const speed = Math.min(buildProgress * 2.5, 1) * 0.20;
     groupRef.current.rotation.y = t * speed;
-    groupRef.current.rotation.x = Math.sin(t * 0.08) * 0.14;
-    groupRef.current.rotation.z = Math.cos(t * 0.06) * 0.06;
+    groupRef.current.rotation.x = 0.15 + Math.sin(t * 0.08) * 0.06; // slightly tilted forward to mimic front-view
+    groupRef.current.rotation.z = Math.cos(t * 0.06) * 0.03;
   });
 
   return (
