@@ -102,11 +102,6 @@ function ServiceCard({
       {/* Content */}
       <h3>{service.title}</h3>
       <p>{service.description}</p>
-
-      {/* Hover tag */}
-      <span className="service-card-tag" aria-hidden="true">
-        Ver más →
-      </span>
     </motion.div>
   );
 }
