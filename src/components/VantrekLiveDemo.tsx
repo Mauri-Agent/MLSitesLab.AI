@@ -127,7 +127,7 @@ export default function VantrekLiveDemo() {
   // Focus the text input whenever typing ends or messages change
   useEffect(() => {
     if (!isTyping) {
-      inputRef.current?.focus();
+      inputRef.current?.focus({ preventScroll: true });
     }
   }, [messages, isTyping]);
 

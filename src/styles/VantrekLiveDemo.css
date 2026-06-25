@@ -182,21 +182,38 @@
   gap: 0.4rem;
   padding: 0.8rem 1.5rem 0.2rem 1.5rem;
   font-size: 0.72rem;
-  color: #666666;
   user-select: none;
-}
-
-.ml-breadcrumbs .divider {
-  color: #ccc;
+  white-space: nowrap;
+  flex-wrap: nowrap;
 }
 
 .ml-breadcrumbs span {
+  color: #3483fa; /* Mercado Libre Link Blue */
+  cursor: pointer;
+}
+
+.ml-breadcrumbs span:hover {
+  text-decoration: underline;
+}
+
+.ml-breadcrumbs .divider {
+  color: #999999;
   cursor: default;
+  margin: 0 0.1rem;
+}
+
+.ml-breadcrumbs .divider:hover {
+  text-decoration: none;
 }
 
 .ml-breadcrumbs span.active {
-  color: #333;
-  font-weight: 600;
+  color: #333333;
+  font-weight: 500;
+  cursor: default;
+}
+
+.ml-breadcrumbs span.active:hover {
+  text-decoration: none;
 }
 
 /* Dashboard Layout (Split) */

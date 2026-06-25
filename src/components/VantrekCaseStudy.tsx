@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, AlertCircle, Sparkles, TrendingUp } from 'lucide-react';
 import VantrekLiveDemo from './VantrekLiveDemo';
@@ -7,6 +8,23 @@ interface VantrekCaseStudyProps {
 }
 
 export default function VantrekCaseStudy({ navigate }: VantrekCaseStudyProps) {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const headerElement = document.querySelector('.case-study-header');
+      if (headerElement) {
+        const navbarHeight = 72; // --nav-h height
+        const rect = headerElement.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const targetTop = rect.top + scrollTop - navbarHeight - 24; // 24px/1.5rem padding under the sticky navbar
+        window.scrollTo({
+          top: targetTop,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <motion.div
       className="case-study-page"
